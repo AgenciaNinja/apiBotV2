@@ -3,6 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Generic_model extends CI_Model
 {
+    public function setDb($database = 'default')
+    {
+        $this->db = $this->load->database($database, TRUE);
+    }
+
     public function insert($table, $data)
     {
         $this->db->insert($table, $data);

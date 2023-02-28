@@ -42,6 +42,8 @@ class ControlUrls extends RestController
             );
         }
 
+        $this->generic_model->setDb($data->dbName);
+
         $status = $this->generic_model
             ->insert("control_urls", ["dominio" => $data->domain]);
 
@@ -69,6 +71,8 @@ class ControlUrls extends RestController
                 ], 404
             );
         }
+
+        $this->generic_model->setDb($data->dbName);
 
         $d = $this->generic_model
             ->countBy("control_urls", array("dominio" => $dominio));
@@ -114,6 +118,8 @@ class ControlUrls extends RestController
                 ], 404
             );
         }
+
+        $this->generic_model->setDb($data->dbName);
 
         $d = $this->generic_model
             ->getOneBy("control_urls", array("dominio" => $data->domain));

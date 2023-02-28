@@ -41,8 +41,10 @@ class Tarea extends RestController
         }
     }
 
-    public function find_get($limit = 0, $server =  1, $minToKill = 15)
+    public function find_get($limit = 0, $server =  1, $minToKill = 15, $dbName = 'default')
     {
+        $this->generic_model->setDb($dbName);
+
         $timezone   = new DateTimeZone(env("ZONE"));
         $actualTime = new DateTime();
         $oldTime    = new DateTime();
@@ -68,10 +70,7 @@ class Tarea extends RestController
         $update = $this->generic_model
             ->updateMultiple("tareas", $wheres, $wheresIn, $data);
 
-        $wheres = [
-            "server" => (int)$server,
-        ];
-
+        $wheres       = ["server" => (int)$server];
         $inProcces    = $this->generic_model->countBy("tareas", $wheres, $wheresIn);
         $limitAverage = $limit - $inProcces;
 
@@ -103,8 +102,6 @@ class Tarea extends RestController
                     'message'   => 'Tareas pendientes',
                     'inProcces' => $inProcces,
                     'limitAvg'  => $limitAverage,
-                    //'oldTime'   => $oldTime->format("Y-m-d H:i"),
-                    //'actTime'   => $actualTime->format("Y-m-d H:i"),
                     'data'      => $tareas
                 ], 200
             );
@@ -118,9 +115,10 @@ class Tarea extends RestController
         }
     }
 
-    public function findById_get($id = '')
+    public function findById_get($id = '',  $dbName = 'default')
     {
-        $tarea = $this->generic_model
+        $this->generic_model->setDb($dbName);
+        $tarea =  $this->generic_model
             ->getOneBy('tareas',  array( "id" => (int)$id));
 
         if ($tarea) {
@@ -142,7 +140,7 @@ class Tarea extends RestController
         }
     }
 
-    public function findByEdo_get($id = 0, $estado = "trabajo")
+    public function findByEdo_get($id = 0, $estado = "trabajo", $dbName = 'default')
     {
         if ($id <= 0) {
             $this->response(
@@ -152,6 +150,8 @@ class Tarea extends RestController
                 ], 404
             );
         }
+
+        $this->generic_model->setDb($dbName);
 
         $numTareas = $this->generic_model
             ->countBy("tareas", array("id" => $id, "estado" => $estado));
@@ -184,6 +184,9 @@ class Tarea extends RestController
                 ], 200
             );
         }
+        
+        $this->generic_model->setDb($data->dbName);
+
         $tarea = $this->generic_model->getOneBy("tareas", ["id" => $id]);
 
         if (!$tarea) {

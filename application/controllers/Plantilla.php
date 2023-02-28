@@ -25,7 +25,7 @@ class Plantilla extends RestController
         }
     }
 
-    public function random_get($id = 0, $lang = "ES")
+    public function random_get($id = 0, $lang = "ES", $dbName = 'default')
     {
         $spanish = ['', '-', '--', 'ES'];
         if (in_array($lang, $spanish)) {
@@ -42,6 +42,8 @@ class Plantilla extends RestController
                 ], 404
             );
         }
+
+        $this->db = $this->load->database($dbName, TRUE);
 
         $plantilla = $this->db->order_by('rand()')->get_where(
             "plantillas", array(

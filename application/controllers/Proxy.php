@@ -25,8 +25,10 @@ class Proxy extends RestController
         }
     }
 
-    public function random_get()
+    public function random_get($dbName = 'default')
     {
+        $this->db = $this->load->database($dbName, TRUE);
+
         $proxy = $this->db
             ->select('CONCAT("--proxy-server=",ip_domain,":",port) as proxy, ip_domain as ip, user, pass')
             ->order_by('rand()')
