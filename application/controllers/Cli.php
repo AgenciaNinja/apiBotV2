@@ -88,7 +88,8 @@ class Cli extends CI_Controller
                 if ($resp->status === 'success') {
                     $updated = ["enviado" => "finalizado"];
                 }
-                $this->generic_model->update("informacion_contacto", $email->id, $updated, $editables);
+                $this->generic_model
+                    ->update("informacion_contacto", $email->id, $updated, $this->editables);
                 $this->curlOpts['CURLOPT_POSTFIELDS']['email'] = '';
                 curl_close($curl);
             }
