@@ -22,7 +22,12 @@ class Tarea extends RestController
         'form',
         'fecha_creacion',
         'fecha_actualizacion',
-        'fecha_finalizado'
+        'fecha_finalizado',
+
+        'estado_contacto',
+        'server_contacto',
+        'actualizacion_contacto',
+        'finalizado_contacto'
     ];
 
     public function __construct()
@@ -41,7 +46,7 @@ class Tarea extends RestController
         }
     }
 
-    public function find_get($limit = 0, $server =  1, $minToKill = 15, $dbName = 'default')
+    public function find_get($limit = 0, $server =  1, $minToKill = 15, $dbName = 'default', $toContact = false)
     {
         $this->generic_model->setDb($dbName);
 
@@ -53,35 +58,68 @@ class Tarea extends RestController
         $oldTime->setTimezone($timezone);
         $oldTime->modify("-". $minToKill." minute");
 
-        $wheres = [
-            "server"                 => (int)$server ,
-            "fecha_actualizacion <=" =>  $oldTime->format("Y-m-d H:i")
-        ];
+        if (!$toContact) {
+            $wheres = [
+                "server"                 => (int)$server ,
+                "fecha_actualizacion <=" =>  $oldTime->format("Y-m-d H:i")
+            ];
+        } else {
+            $wheres = [
+                "server_contacto"           => (int)$server ,
+                "actualizacion_contacto <=" =>  $oldTime->format("Y-m-d H:i")
+            ];
+        }
 
-        $wheresIn = [
-            "estado" => ["trabajo", "proceso"]
-        ];
+        if (!$toContact) {
+            $wheresIn = [
+                "estado" => ["trabajo", "proceso"]
+            ];
+        } else {
+            $wheresIn = [
+                "estado_contacto" => ["trabajo", "proceso"]
+            ];
+        }
 
-        $data = [
-            "estado"           => "por_repasar",
-            "fecha_finalizado" => $actualTime->format("Y-m-d H:i:s")
-        ];
+        if (!$toContact) {
+            $data = [
+                "estado"           => "por_repasar",
+                "fecha_finalizado" => $actualTime->format("Y-m-d H:i:s")
+            ];
+        } else {
+            $data = [
+                "estado_contacto"     => "por_repasar",
+                "finalizado_contacto" => $actualTime->format("Y-m-d H:i:s")
+            ];
+        }
 
         $update = $this->generic_model
             ->updateMultiple("tareas", $wheres, $wheresIn, $data);
 
-        $wheres       = ["server" => (int)$server];
+        if (!$toContact) {
+            $wheres = [ "server" => (int)$server];
+        } else {
+            $wheres = [ "server_contacto" => (int)$server];
+        }
+
         $inProcces    = $this->generic_model->countBy("tareas", $wheres, $wheresIn);
         $limitAverage = $limit - $inProcces;
 
         if ($limitAverage > 0) {
+            if (!$toContact) {
+                $where = [
+                    "estado" => "pendiente",
+                    "server" => (int)$server
+                ];
+            } else {
+                $where = [
+                    "estado_contacto" => "pendiente",
+                    "server_contacto" => (int)$server
+                ];
+            }
             $tareas = $this->generic_model->getMultipleBy(
                 "tareas",
                 "id,id_trabajo,url,country",
-                [
-                    "estado" => "pendiente",
-                    "server" => (int)$server
-                ],
+                $where,
                 false,
                 false,
                 $limitAverage
@@ -113,6 +151,11 @@ class Tarea extends RestController
                 ], 404
             );
         }
+    }
+
+    public function findToContact_get($limit = 0, $server =  1, $minToKill = 15, $dbName = 'default')
+    {
+        return $this->find_get($limit, $server, $minToKill, $dbName, true);
     }
 
     public function findById_get($id = '',  $dbName = 'default')
