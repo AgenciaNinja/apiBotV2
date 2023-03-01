@@ -48,7 +48,7 @@ class Cli extends CI_Controller
 
     public function ejecutar_sendEmails()
     {
-        $o = shell_exec("nohup php /var/www/vhosts/setads.top/httpdocs/apiBotV2/index.php cli sendEmails apibot_latam > /dev/null &");
+        $o = shell_exec("nohup php /var/www/vhosts/setads.top/httpdocs/apiBotV2/index.php cli sendEmails defautl > /dev/null &");
         echo $o . PHP_EOL;
     }
 
