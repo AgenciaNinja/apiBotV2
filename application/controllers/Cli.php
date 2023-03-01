@@ -81,7 +81,7 @@ class Cli extends CI_Controller
                 echo $email->valor.PHP_EOL;
                 $this->curlOpts['CURLOPT_POSTFIELDS']['email'] = $email->valor;
                 $curl = curl_init();
-                curl_setopt_array($curl, $curlOpts);
+                curl_setopt_array($curl, $this->curlOpts);
                 $r       = curl_exec($curl);
                 $resp    = json_decode($r);
                 $updated = ["enviado" => "error"];
