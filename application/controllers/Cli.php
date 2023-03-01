@@ -7,28 +7,6 @@ class Cli extends CI_Controller
         "enviado"
     ];
 
-    public $curlOpts = [
-        CURLOPT_URL            => 'https://sender.prensamadrid.com/api/add_contact',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING       => '',
-        CURLOPT_MAXREDIRS      => 10,
-        CURLOPT_TIMEOUT        => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST  => 'POST',
-        CURLOPT_POSTFIELDS     => array(
-            'email'            => '',
-            'id_listado'       => '20',
-            'nombre'           => '',
-            'Apellidos'        => '',
-            'empresa'          => ''
-        ),
-        CURLOPT_HTTPHEADER => array(
-            'token: xMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ',
-            'Cookie: sender_email=sc2dcluorsgq0g0644mn88du91dnjf7s'
-        ),
-    ];
-
     public function procesarDomainRaw($dbName = "default")
     {
         $this->generic_model->setDb($dbName);
@@ -68,6 +46,12 @@ class Cli extends CI_Controller
         }
     }
 
+    public function ejecutar_sendEmails()
+    {
+        $o = shell_exec("nohup php /var/www/vhosts/setads.top/httpdocs/apiBotV2/index.php cli sendEmails apibot_latam > /dev/null &");
+        echo $o . PHP_EOL;
+    }
+
     public function sendEmails($dbName = "default")
     {
         $this->generic_model->setDb($dbName);
@@ -79,7 +63,6 @@ class Cli extends CI_Controller
                 ->getMultipleBy("informacion_contacto", "*", $wheres, false, false, 20);
             foreach ($emails as $email) {
                 echo $email->valor.PHP_EOL;
-                $this->curlOpts['CURLOPT_POSTFIELDS']['email'] = $email->valor;
                 $curl = curl_init();
                 curl_setopt_array(
                     $curl,
@@ -113,10 +96,9 @@ class Cli extends CI_Controller
                 }
                 $this->generic_model
                     ->update("informacion_contacto", $email->id, $updated, $this->editables);
-                $this->curlOpts['CURLOPT_POSTFIELDS']['email'] = '';
                 curl_close($curl);
             }
-            $ciclo = false;
+            //$ciclo = false;
             sleep(15);
         }
     }
