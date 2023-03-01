@@ -28,29 +28,24 @@ class Plantilla extends RestController
     public function random_get($id = 0, $lang = "ES", $dbName = 'default')
     {
         $spanish = ['', '-', '--', 'ES'];
-        if (in_array($lang, $spanish)) {
-            $lang = 'ES';
-        } else {
+        if (!in_array($lang, $spanish)) {
             $lang = 'US';
         }
 
         if ($id <= 0) {
             $this->response(
                 [
-                'status' => false,
-                'message' => 'No se encontró el id o el id es inferior a 1'
+                    'status' => false,
+                    'message' => 'No se encontró el id o el id es inferior a 1'
                 ], 404
             );
         }
 
-        $this->db = $this->load->database($dbName, TRUE);
+        $this->generic_model->setDb($dbName);
 
-        $plantilla = $this->db->order_by('rand()')->get_where(
-            "plantillas", array(
-                "id_trabajo" => $id,
-                "lang" => $lang
-                )
-        )->row();
+        $wheres    = ["id_trabajo" => $id, "lang" => $lang];
+        $plantilla = $this->generic_model
+            ->getOneBy('plantillas', "*", $wheres, false, false, 'rand()');
 
         if (!$plantilla) {
             $this->response(

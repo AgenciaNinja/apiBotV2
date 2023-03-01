@@ -37,10 +37,50 @@ class Generic_model extends CI_Model
         return $rows > 0 ? $rows : 0;
     }
 
-    public function getOneBy($table, $cond = false)
+    public function getOneBy($table, $select  = "*", $wheres = false, $wheresIn = false, $joins = false, $orderBy = false, $direction = 'DESC')
     {
         $this->db->save_queries = false;
-        return ((!$cond) || (!is_array($cond))) ? false : $this->db->get_where($table, $cond)->row();
+
+        if (is_array($select)) {
+            foreach ($select as $s) {
+                $this->db->select($s);
+            }
+        } else {
+            $this->db->select($select);
+        }
+
+        $this->db->from($table);
+
+        if (is_array($wheres)) {
+            foreach ($wheres as $key => $where) {
+                $this->db->where($key, $where);
+            }
+        }
+
+        if (is_array($wheresIn)) {
+            foreach ($wheresIn as $key => $where) {
+                $this->db->where_in($key, $where);
+            }
+        }
+
+        if (is_array($joins)) {
+            foreach ($joins as $join) {
+                if (isset($join[2])) {
+                    $this->db->join($join[0], $join[1], $join[2]);
+                } else {
+                    $this->db->join($join[0], $join[1]);
+                }
+            }
+        }
+
+        if ($orderBy !== false) {
+            $this->db->order_by($orderBy, $direction);
+        }
+
+        $data = $this->db->get()->row();
+        return $data ? $data : false;
+
+        //return ((!$wheres) || (!is_array($wheres))) ? false : $this->db->get_where($table, $wheres)->row();
     }
 
     public function getMultipleBy($table, $select  = "*", $wheres = false, $wheresIn = false, $joins = false, $limit = false, $orderBy = false, $direction = 'DESC')
@@ -59,6 +99,12 @@ class Generic_model extends CI_Model
         if (is_array($wheres)) {
             foreach ($wheres as $key => $where) {
                 $this->db->where($key, $where);
+            }
+        }
+
+        if (is_array($wheresIn)) {
+            foreach ($wheresIn as $key => $where) {
+                $this->db->where_in($key, $where);
             }
         }
 

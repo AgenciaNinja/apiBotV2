@@ -122,7 +122,7 @@ class ControlUrls extends RestController
         $this->generic_model->setDb($data->dbName);
 
         $d = $this->generic_model
-            ->getOneBy("control_urls", array("dominio" => $data->domain));
+            ->getOneBy("control_urls", "*", ["dominio" => $data->domain]);
         $data = array("contador" => $d->contador +1);
 
         $this->generic_model

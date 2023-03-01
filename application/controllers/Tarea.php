@@ -119,7 +119,7 @@ class Tarea extends RestController
     {
         $this->generic_model->setDb($dbName);
         $tarea =  $this->generic_model
-            ->getOneBy('tareas',  array( "id" => (int)$id));
+            ->getOneBy('tareas',  "*", ["id" => (int)$id]);
 
         if ($tarea) {
             $this->response(
@@ -184,10 +184,10 @@ class Tarea extends RestController
                 ], 200
             );
         }
-        
+
         $this->generic_model->setDb($data->dbName);
 
-        $tarea = $this->generic_model->getOneBy("tareas", ["id" => $id]);
+        $tarea = $this->generic_model->getOneBy("tareas", "*", ["id" => $id]);
 
         if (!$tarea) {
             $this->response(
