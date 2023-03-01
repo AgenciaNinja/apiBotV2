@@ -3,8 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cli extends CI_Controller
 {
-    public $editablesDomainRaw = [
-        "estado"
+    public $editables = [
+        "enviado"
     ];
 
     public $curlOpts = [
@@ -88,7 +88,7 @@ class Cli extends CI_Controller
                 if ($resp->status === 'success') {
                     $updated = ["enviado" => "finalizado"];
                 }
-                $this->generic_model->update("informacion_contacto", $email->id, $updated);
+                $this->generic_model->update("informacion_contacto", $email->id, $updated, $editables);
                 $this->curlOpts['CURLOPT_POSTFIELDS']['email'] = '';
                 curl_close($curl);
             }
