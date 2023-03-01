@@ -81,7 +81,30 @@ class Cli extends CI_Controller
                 echo $email->valor.PHP_EOL;
                 $this->curlOpts['CURLOPT_POSTFIELDS']['email'] = $email->valor;
                 $curl = curl_init();
-                curl_setopt_array($curl, $this->curlOpts);
+                curl_setopt_array(
+                    $curl,
+                    array(
+                        CURLOPT_URL => 'https://sender.prensamadrid.com/api/add_contact',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => array(
+                            'email'      => $email->valor,
+                            'id_listado' => '20',
+                            'nombre'     => '',
+                            'Apellidos'  => '',
+                            'empresa'     => ''
+                        ),
+                        CURLOPT_HTTPHEADER => array(
+                            'token: xMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ',
+                            'Cookie: sender_email=sc2dcluorsgq0g0644mn88du91dnjf7s'
+                        ),
+                    )
+                );
                 $r       = curl_exec($curl);
                 $resp    = json_decode($r);
                 $updated = ["enviado" => "error"];
