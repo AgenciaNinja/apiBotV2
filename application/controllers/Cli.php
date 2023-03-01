@@ -76,7 +76,7 @@ class Cli extends CI_Controller
             $this->db->save_queries = false;
             $wheres = ["tipo" => "correo","enviado" => "pendiente"];
             $emails = $this->generic_model
-                ->getMultipleBy("informacion_contacto", "*", $wheres, false, false, 10);
+                ->getMultipleBy("informacion_contacto", "*", $wheres, false, false, 1);
             foreach ($emails as $email) {
                 echo $email->valor.PHP_EOL;
                 $this->curlOpts['CURLOPT_POSTFIELDS']['email'] = $email->valor;
