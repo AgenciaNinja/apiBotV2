@@ -94,11 +94,90 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="text-secondary">BaseDatos </h5>
+                            <h3 class="text-info text-center">"<?php echo $dbName; ?>"</h3>
+                            <div class="text-center mt-2 text-secondary">
+                                <i class="fa fa-database" style="font-size: 80px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="text-secondary">Fecha </h5>
+                            <h3 class="text-info text-center"><?php echo $fecha; ?></h3>
+                            <div class="text-center mt-2 text-secondary">
+                                <i class="fa fa-calendar" style="font-size: 80px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="text-secondary">Server(s) </h5>
+                            <h3 class="text-info text-center">
+                                <?php echo ($server == 0) ? "Todos" : "núm # ".$server; ?>
+                            </h3>
+                            <div class="text-center mt-2 text-secondary">
+                                <i class="fa fa-server" style="font-size: 80px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="text-secondary">Urls procesadas </h5>
+                            <h3 class="text-info text-center">
+                                <?php if ($total <= 0) : ?>
+                                    <div class="text-center mt-2 text-danger">
+                                        <i class="fa fa-exclamation" style="font-size: 110px;"></i>
+                                    </div>
+                                <?php else: ?>
+                                    <h3 class="text-success">
+                                        <?= $total;?>
+                                    </h3>
+                                    <div class="text-center mt-2 text-secondary">
+                                        <i class="fa fa-file-code-o" style="font-size: 80px;"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </h3>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="text-info">
                                 Base de Datos: <?php echo $dbName; ?>
+                            </h4>
+                            <h4 class="text-info">
+                                Fercha: <?php echo $fecha; ?>
+                            </h4>
+                            <h4 class="text-info">
+                                Urls Procesadas: <?php echo $total; ?>
+                            </h4>
+                            <h4 class="text-info">
+                                Forms enviados: <?php echo $sended; ?>
+                            </h4>
+                            <h4 class="text-info">
+                                % Efectividad: <?php echo $porc; ?>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="text-info">
+                                Base Datos: <?php echo $dbName; ?>
                             </h4>
                             <h4 class="text-info">
                                 Fercha: <?php echo $fecha; ?>
