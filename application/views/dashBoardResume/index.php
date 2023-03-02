@@ -12,11 +12,12 @@
                     <h2 class="mg-b-0 tx-spacing--1">DashBoard Resume</h2>
                 </div>
             </div>
+
             <div class="row mb-2">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <form method="get" action="<?php echo base_url("dashBoardResume/index") ?>">
+                            <form method="post" action="<?php echo base_url("dashBoardResume/index") ?>">
                                 <div class="row ">
                                     <div class="col-md-3 mt-2 form-group">
                                         <label for="database">Base Datos</label>
@@ -26,6 +27,12 @@
                                                     <?php echo ($dbName === 'default') ? 'selected' : '' ?>
                                                 >
                                                     default
+                                                </option>
+                                                <option
+                                                    value="scraper2"
+                                                    <?php echo ($dbName === 'scraper2') ? 'selected' : '' ?>
+                                                >
+                                                    scraper2
                                                 </option>
                                                 <option
                                                     value="apibot_latam"
@@ -62,16 +69,13 @@
                                     <div class="col-md-3 mt-2 form-group">
                                         <label for="server">Server</label>
                                         <select id="server" name="server" class="form-control">
-                                            <option
-                                                value="<?= $server ?>"
-                                                <?php echo ($server === 'todos') ? 'selected' : '' ?>
-                                            >
-                                                <?= $server ?>
+                                            <option value="0" <?php echo ($server === '0') ? 'selected' : '' ?>>
+                                                todos
                                             </option>
                                             <?php for ($i= 1; $i<= 12; $i++): ?>
                                                 <option
                                                     value="<?= $i ?>"
-                                                    <?php echo ($i === $server) ? 'selected' : '' ?>
+                                                    <?php echo ($i == $server) ? 'selected' : '' ?>
                                                 >
                                                     <?= $i  ?>
                                                 </option>
@@ -108,21 +112,8 @@
                             <h4 class="text-info">
                                 % Efectividad: <?php echo $porc; ?>
                             </h4>
-
-                            <!--h4 class="mt-2 text-success">
-
-                            </h4-->
-
                         </div>
                     </div>
-                    <!--div class="card mt-3">
-                        <div class="card-header">
-
-                        </div>
-                        <div class="card-body">
-
-                        </div>
-                    </div-->
                 </div>
             </div>
         </div>

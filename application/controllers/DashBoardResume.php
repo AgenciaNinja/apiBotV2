@@ -11,15 +11,17 @@ class DashBoardResume extends MY_Controller
         }
     }
 
-    public function index($dbName = "default", $server = "todos", $fecha = "")
+    public function index()
     {
-
+        $timezone         = new DateTimeZone(env("ZONE"));
         $data['titlePag'] = 'Bot Forms - DashBoard Resume';
-        $data['dbName']   = $dbName;
-        $data['server']   = $server;
+        $data['dbName']   = $this->input->post("dbName") ? $this->input->post("dbName") : "default";
+        $data['server']   = $this->input->post("server") ? $this->input->post("server") : "0";
+        $data['fecha']    = $this->input->post("fecha")  ? $this->input->post("fecha")  : "";
 
-        $timezone = new DateTimeZone(env("ZONE"));
-        if ($fecha === "") {
+
+
+        if ($data['fecha'] === "") {
             $fecha = new DateTime();
             $fecha->setTimezone($timezone);
             $data['fecha'] = $fecha->format("Y-m-d");
@@ -37,9 +39,9 @@ class DashBoardResume extends MY_Controller
             "estado"             => "finalizado",
             "form"               => "encontrado"
         ];
-        if ($data['server'] !== "todos" ) {
-            $wheres1["server"] = $server;
-            $wheres2["server"] = $server;
+        if ($data['server'] !== "0" ) {
+            $wheres1["server"] = $data['server'];
+            $wheres2["server"] = $data['server'];
         }
 
         $this->generic_model->setDb($data['dbName']);
