@@ -184,10 +184,16 @@
                                     </div>
                                 <?php else: ?>
                                     <h2 class="text-success text-center">
-                                        <?= $porc;?>
+                                        <?= $porc;?> %
                                     </h2>
                                     <div class="text-center mt-2 text-success">
-                                        <i class="fa fa-check" style="font-size: 75px;"></i>
+                                        <?php if ($porc <= 10) : ?>
+                                            <i class="fa fa-check text-danger" style="font-size: 75px;"></i>
+                                        <?php elseif (($porc > 10) && ($porc <= 30)) : ?>
+                                            <i class="fa fa-check text-warning" style="font-size: 75px;"></i>
+                                        <?php else: ?>
+                                            <i class="fa fa-check text-success" style="font-size: 75px;"></i>
+                                        <?php endif ?>
                                     </div>
                                 <?php endif; ?>
                             </h3>
