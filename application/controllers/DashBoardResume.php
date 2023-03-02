@@ -13,7 +13,7 @@ class DashBoardResume extends MY_Controller
 
     public function index()
     {
-        $solver = new \TwoCaptcha\TwoCaptcha('fbf256f0e9429ca9a4cc65b0b1ad0784');
+        $solver = new \TwoCaptcha\TwoCaptcha(env("API_2CAPTCHA"));
         $data['balance'] = round($solver->balance(), 2);
         $timezone         = new DateTimeZone(env("ZONE"));
         $data['titlePag'] = 'Bot Forms - DashBoard Resume';
