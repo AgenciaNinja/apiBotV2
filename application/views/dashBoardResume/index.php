@@ -19,54 +19,78 @@
                         <div class="card-header">
                             <form method="post" action="<?php echo base_url("dashBoardResume/index") ?>">
                                 <div class="row ">
+                                    <div class="col-md-2 mt-2 form-group">
+                                        <label for="balance" class="text-primary">Balance 2Captcha</label>
+                                        <div class="input-group">
+                                            <input
+                                                class="
+                                                form-control
+                                                <?php if ($balance <= 20) : ?>
+                                                    text-danger
+                                                <?php elseif (($balance > 20) && ($balance <= 30)) : ?>
+                                                    text-warning
+                                                <?php else: ?>
+                                                text-success
+                                                <?php endif ?>
+                                                "
+                                                name="balance" id="balance"
+                                                type="text"
+                                                value="<?php echo $balance ?>"
+                                                readonly
+                                            >
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">$$</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-3 mt-2 form-group">
                                         <label for="database">Base Datos</label>
-                                            <select id="dbName" name="dbName" class="form-control">
-                                                <option
-                                                    value="default"
-                                                    <?php echo ($dbName === 'default') ? 'selected' : '' ?>
-                                                >
-                                                    default
-                                                </option>
-                                                <option
-                                                    value="scraper2"
-                                                    <?php echo ($dbName === 'scraper2') ? 'selected' : '' ?>
-                                                >
-                                                    scraper2
-                                                </option>
-                                                <option
-                                                    value="apibot_latam"
-                                                    <?php echo ($dbName === 'apibot_latam') ? 'selected' : '' ?>
-                                                >
-                                                    apibot_latam
-                                                </option>
-                                                <option
-                                                    value="apibot_agencias_marketing"
-                                                    <?php echo ($dbName === 'apibot_agencias_marketing') ? 'selected' : '' ?>
-                                                >
-                                                    apibot_agencias_marketing
-                                                </option>
+                                        <select id="dbName" name="dbName" class="form-control">
+                                            <option
+                                                value="default"
+                                                <?php echo ($dbName === 'default') ? 'selected' : '' ?>
+                                            >
+                                                default
+                                            </option>
+                                            <option
+                                                value="scraper2"
+                                                <?php echo ($dbName === 'scraper2') ? 'selected' : '' ?>
+                                            >
+                                                scraper2
+                                            </option>
+                                            <option
+                                                value="apibot_latam"
+                                                <?php echo ($dbName === 'apibot_latam') ? 'selected' : '' ?>
+                                            >
+                                                apibot_latam
+                                            </option>
+                                            <option
+                                                value="apibot_agencias_marketing"
+                                                <?php echo ($dbName === 'apibot_agencias_marketing') ? 'selected' : '' ?>
+                                            >
+                                                apibot_agencias_marketing
+                                            </option>
 
-                                            </select>
+                                        </select>
                                     </div>
-                                    <div class="col-md-3 mt-2 form-group">
+                                    <div class="col-md-2 mt-2 form-group">
                                         <label for="database">Fecha</label>
-                                            <select id="fecha" name="fecha" class="form-control">
-                                                <option
-                                                    value="<?= $hoy ?>"
-                                                    <?php echo ($fecha === $hoy) ? 'selected' : '' ?>
-                                                >
-                                                    <?= $hoy ?>
-                                                </option>
-                                                <option
-                                                    value="<?= $ayer ?>"
-                                                    <?php echo ($fecha === $ayer) ? 'selected' : '' ?>
-                                                >
-                                                    <?= $ayer ?>
-                                                </option>
-                                            </select>
+                                        <select id="fecha" name="fecha" class="form-control">
+                                            <option
+                                                value="<?= $hoy ?>"
+                                                <?php echo ($fecha === $hoy) ? 'selected' : '' ?>
+                                            >
+                                                <?= $hoy ?>
+                                            </option>
+                                            <option
+                                                value="<?= $ayer ?>"
+                                                <?php echo ($fecha === $ayer) ? 'selected' : '' ?>
+                                            >
+                                                <?= $ayer ?>
+                                            </option>
+                                        </select>
                                     </div>
-                                    <div class="col-md-3 mt-2 form-group">
+                                    <div class="col-md-2 mt-2 form-group">
                                         <label for="server">Server</label>
                                         <select id="server" name="server" class="form-control">
                                             <option value="0" <?php echo ($server === '0') ? 'selected' : '' ?>>
@@ -82,8 +106,8 @@
                                             <?php endfor ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-3 pt-4">
-                                        <button type="submit" class="btn btn-block btn-secondary">
+                                    <div class="col-md-2 pt-4">
+                                        <button type="submit" class="btn btn-block btn-secondary mt-2">
                                             <i class="fas fa-filter mr-1"></i>Consultar
                                         </button>
                                     </div>

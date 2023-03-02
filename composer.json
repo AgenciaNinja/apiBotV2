@@ -13,7 +13,8 @@
 	"require": {
 		"php": ">=5.3.7",
 		"chriskacerguis/codeigniter-restserver": "^3.1",
-		"vlucas/phpdotenv": "^5.4"
+		"vlucas/phpdotenv": "^5.4",
+		"2captcha/2captcha": "^1.1"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
