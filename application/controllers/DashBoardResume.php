@@ -13,11 +13,23 @@ class DashBoardResume extends MY_Controller
 
     public function index($dbName = "default", $server = "todos", $fecha = "")
     {
+
         $data['titlePag'] = 'Bot Forms - DashBoard Resume';
         $data['dbName']   = $dbName;
+        $data['server']   = $server;
+
+        $timezone = new DateTimeZone(env("ZONE"));
         if ($fecha === "") {
-            $data['fecha'] = date("Y-m-d");
+            $fecha = new DateTime();
+            $fecha->setTimezone($timezone);
+            $data['fecha'] = $fecha->format("Y-m-d");
         }
+
+        $hoy = new DateTime();
+        $hoy->setTimezone($timezone);
+        $data['hoy'] = $hoy->format("Y-m-d");
+        $hoy->modify("-1 day");
+        $data['ayer'] = $hoy->format("Y-m-d");
 
         $wheres1 = ["fecha_finalizado >" => $data['fecha']];
         $wheres2 = [
@@ -25,7 +37,7 @@ class DashBoardResume extends MY_Controller
             "estado"             => "finalizado",
             "form"               => "encontrado"
         ];
-        if ($server !== "todos" ) {
+        if ($data['server'] !== "todos" ) {
             $wheres1["server"] = $server;
             $wheres2["server"] = $server;
         }
