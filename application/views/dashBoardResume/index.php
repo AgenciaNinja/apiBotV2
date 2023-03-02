@@ -20,7 +20,7 @@
                                 <div class="row ">
                                     <div class="col-md-3 mt-2 form-group">
                                         <label for="database">Base Datos</label>
-                                            <select id="database" name="database" class="form-control">
+                                            <select id="dbName" name="dbName" class="form-control">
                                                 <option
                                                     value="default"
                                                     <?php echo ($dbName === 'default') ? 'selected' : '' ?>
