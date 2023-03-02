@@ -139,11 +139,11 @@
                                         <i class="fa fa-exclamation" style="font-size: 110px;"></i>
                                     </div>
                                 <?php else: ?>
-                                    <h3 class="text-success">
+                                    <h2 class="text-success text-center">
                                         <?= $total;?>
-                                    </h3>
-                                    <div class="text-center mt-2 text-secondary">
-                                        <i class="fa fa-file-code-o" style="font-size: 80px;"></i>
+                                    </h2>
+                                    <div class="text-center mt-2 text-success">
+                                        <i class="fa fa-check" style="font-size: 80px;"></i>
                                     </div>
                                 <?php endif; ?>
                             </h3>
