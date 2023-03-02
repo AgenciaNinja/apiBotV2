@@ -48,7 +48,7 @@ class DashBoardResume extends MY_Controller
 
         $data['total']  = $this->generic_model->countBy("tareas", $wheres1);
         $data['sended'] = $this->generic_model->countBy("tareas", $wheres2);
-        $data['porc']   = $data['sended'] > 0 ? ($data['sended'] * 100)/$data['total'] : 0;
+        $data['porc']   = $data['sended'] > 0 ? round(($data['sended'] * 100)/$data['total']) : 0;
         $this->__vista('dashBoardResume/index', $data);
     }
 

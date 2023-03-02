@@ -143,7 +143,7 @@
                                         <?= $total;?>
                                     </h2>
                                     <div class="text-center mt-2 text-success">
-                                        <i class="fa fa-check" style="font-size: 80px;"></i>
+                                        <i class="fa fa-check" style="font-size: 75px;"></i>
                                     </div>
                                 <?php endif; ?>
                             </h3>
@@ -151,46 +151,47 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-2">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="text-info">
-                                Base de Datos: <?php echo $dbName; ?>
-                            </h4>
-                            <h4 class="text-info">
-                                Fercha: <?php echo $fecha; ?>
-                            </h4>
-                            <h4 class="text-info">
-                                Urls Procesadas: <?php echo $total; ?>
-                            </h4>
-                            <h4 class="text-info">
-                                Forms enviados: <?php echo $sended; ?>
-                            </h4>
-                            <h4 class="text-info">
-                                % Efectividad: <?php echo $porc; ?>
-                            </h4>
+                            <h5 class="text-secondary">Forms enviados </h5>
+                            <h3 class="text-info text-center">
+                                <?php if ($sended <= 0) : ?>
+                                    <div class="text-center mt-2 text-danger">
+                                        <i class="fa fa-exclamation" style="font-size: 110px;"></i>
+                                    </div>
+                                <?php else: ?>
+                                    <h2 class="text-success text-center">
+                                        <?= $sended;?>
+                                    </h2>
+                                    <div class="text-center mt-2 text-success">
+                                        <i class="fa fa-check" style="font-size: 75px;"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </h3>
+
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="text-info">
-                                Base Datos: <?php echo $dbName; ?>
-                            </h4>
-                            <h4 class="text-info">
-                                Fercha: <?php echo $fecha; ?>
-                            </h4>
-                            <h4 class="text-info">
-                                Urls Procesadas: <?php echo $total; ?>
-                            </h4>
-                            <h4 class="text-info">
-                                Forms enviados: <?php echo $sended; ?>
-                            </h4>
-                            <h4 class="text-info">
-                                % Efectividad: <?php echo $porc; ?>
-                            </h4>
+                            <h5 class="text-secondary">Efectividad (%)</h5>
+                            <h3 class="text-info text-center">
+                                <?php if ($porc <= 0) : ?>
+                                    <div class="text-center mt-2 text-danger">
+                                        <i class="fa fa-exclamation" style="font-size: 110px;"></i>
+                                    </div>
+                                <?php else: ?>
+                                    <h2 class="text-success text-center">
+                                        <?= $porc;?>
+                                    </h2>
+                                    <div class="text-center mt-2 text-success">
+                                        <i class="fa fa-check" style="font-size: 75px;"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </h3>
+
                         </div>
                     </div>
                 </div>
