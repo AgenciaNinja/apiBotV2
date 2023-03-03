@@ -230,7 +230,7 @@
                 </div>
                 <div class="row mt-2">
                     <?php foreach ($estados as $estado): ?>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <div class="card">
                                 <div class="card-header">
                                     <h6 class="text-center text-info">

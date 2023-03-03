@@ -42,14 +42,14 @@ class DashBoardResume extends MY_Controller
         $limitToDia->modify("+1 day");
 
         $wheres1 = [
-            "fecha_finalizado >" => $data['fecha'],
+            "fecha_finalizado >=" => $data['fecha'],
             "fecha_finalizado <" => $limitToDia->format("Y-m-d"),
         ];
 
         $wheres2 = [
-            "fecha_finalizado >" => $data['fecha'],
+            "fecha_finalizado >=" => $data['fecha'],
             "fecha_finalizado <" => $limitToDia->format("Y-m-d"),
-            "estado" => "finalizado",
+            "estado"             => "finalizado",
             "form"               => "encontrado"
         ];
 
@@ -71,11 +71,11 @@ class DashBoardResume extends MY_Controller
             }
 
             foreach ($estadosToCheck as $estado) {
-                $wheres1["estado"]   = $estado;
+                $wheres1["estado"]    = $estado;
                 $whereTotal["estado"] = $estado;
-                $detalle["name"]     = $estado;
-                $detalle["fecha"]    = $data['fecha'];
-                $detalle["totalDia"] = $this->generic_model
+                $detalle["name"]      = $estado;
+                $detalle["fecha"]     = $data['fecha'];
+                $detalle["totalDia"]  = $this->generic_model
                     ->countBy("tareas", $wheres1);
 
                 $detalle["total"] = $this->generic_model
