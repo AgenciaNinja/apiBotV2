@@ -14,13 +14,14 @@ class DashBoardResume extends MY_Controller
     public function index()
     {
         $solver = new \TwoCaptcha\TwoCaptcha(env("API_2CAPTCHA"));
-        $data['balance'] = round($solver->balance(), 2);
-        $timezone         = new DateTimeZone(env("ZONE"));
-        $data['titlePag'] = 'Bot Forms - DashBoard Resume';
-        $data['dbName']   = $this->input->post("dbName") ? $this->input->post("dbName") : "default";
-        $data['server']   = $this->input->post("server") ? $this->input->post("server") : "0";
-        $data['fecha']    = $this->input->post("fecha")  ? $this->input->post("fecha")  : "";
 
+        $data['balance']   = round($solver->balance(), 2);
+        $timezone          = new DateTimeZone(env("ZONE"));
+        $data['titlePag']  =  'Bot Forms - DashBoard Resume';
+        $data['dbName']    = $this->input->post("dbName") ? $this->input->post("dbName") : "default";
+        $data['server']    = $this->input->post("server") ? $this->input->post("server") : "0";
+        $data['fecha']     = $this->input->post("fecha")  ? $this->input->post("fecha")  : "";
+        $data['databases'] = explode(",", env("DATABASES"));
 
 
         if ($data['fecha'] === "") {

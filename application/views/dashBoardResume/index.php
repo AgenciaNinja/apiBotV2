@@ -46,31 +46,14 @@
                                     <div class="col-md-3 mt-2 form-group">
                                         <label for="database">Base Datos</label>
                                         <select id="dbName" name="dbName" class="form-control">
-                                            <option
-                                                value="default"
-                                                <?php echo ($dbName === 'default') ? 'selected' : '' ?>
-                                            >
-                                                default
-                                            </option>
-                                            <option
-                                                value="scraper2"
-                                                <?php echo ($dbName === 'scraper2') ? 'selected' : '' ?>
-                                            >
-                                                scraper2
-                                            </option>
-                                            <option
-                                                value="apibot_latam"
-                                                <?php echo ($dbName === 'apibot_latam') ? 'selected' : '' ?>
-                                            >
-                                                apibot_latam
-                                            </option>
-                                            <option
-                                                value="apibot_agencias_marketing"
-                                                <?php echo ($dbName === 'apibot_agencias_marketing') ? 'selected' : '' ?>
-                                            >
-                                                apibot_agencias_marketing
-                                            </option>
-
+                                            <?php foreach ($databases as $database): ?>
+                                                <option
+                                                    value="<?= $database ?>"
+                                                    <?php echo ($dbName === $database) ? 'selected' : '' ?>
+                                                >
+                                                    <?= $database; ?>
+                                                </option>
+                                            <?php endforeach ?>
                                         </select>
                                     </div>
                                     <div class="col-md-2 mt-2 form-group">
