@@ -116,7 +116,7 @@
                 <div class="col-md-2">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="text-secondary">BaseDato</h5>
+                            <h5 class="text-secondary">Basedato</h5>
                             <h3 class="text-info text-center">"<?php echo $dbName; ?>"</h3>
                             <div class="text-center mt-2 text-secondary">
                                 <i class="fa fa-database" style="font-size: 80px;"></i>
@@ -233,7 +233,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h6 class="text-center text-info">
-                                        <?= $estado["name"];?>
+                                        <?= str_replace("_", " ", strtoupper($estado["name"]));?>
                                     </h6>
                                 </div>
                                 <div class="card-body">
@@ -245,11 +245,15 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="text-center col-sm-8">
-                                            <span class=" text-info" style="font-size: 48px;">
-                                                <?= number_format($estado["totalDia"], 0, '', '.');?>
-                                            </span>
-                                        </div>
+                                        <?php if ($estado["totalDia"] <= 0) : ?>
+                                            <div class="col-sm-12 text-center text-secondary" style="font-size: 64px;">
+                                                <i class="fa fa-ban"></i>
+                                            </div>
+                                        <?php else: ?>
+                                            <div class="col-sm-8 text-info" style="font-size: 48px;">
+                                                <?= number_format($estado["totalDia"], 0, '', '.'); ?>
+                                            </div>
+                                        <?php endif ?>
                                     </div>
                                 </div>
                             </div>
