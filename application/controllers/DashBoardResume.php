@@ -43,7 +43,7 @@ class DashBoardResume extends MY_Controller
 
         $wheres1 = [
             "fecha_finalizado >=" => $data['fecha'],
-            "fecha_finalizado <" => $limitToDia->format("Y-m-d")
+            //"fecha_finalizado <" => $limitToDia->format("Y-m-d")
         ];
 
         $wheres2 = [
