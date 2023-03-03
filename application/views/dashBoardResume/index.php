@@ -116,7 +116,7 @@
                 <div class="col-md-2">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="text-secondary">BaseDatos </h5>
+                            <h5 class="text-secondary">BaseDato</h5>
                             <h3 class="text-info text-center">"<?php echo $dbName; ?>"</h3>
                             <div class="text-center mt-2 text-secondary">
                                 <i class="fa fa-database" style="font-size: 80px;"></i>
@@ -159,7 +159,7 @@
                                     </div>
                                 <?php else: ?>
                                     <h2 class="text-success text-center">
-                                        <?= $total;?>
+                                        <?= number_format($total, 0, '', '.');?>
                                     </h2>
                                     <div class="text-center mt-2 text-success">
                                         <i class="fa fa-check" style="font-size: 75px;"></i>
@@ -246,7 +246,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="text-center col-sm-6">
-                                            <span class=" text-info" style="font-size: 25px;">
+                                            <span class=" text-info" style="font-size: 32px;">
                                                 <?= $estado["totalDia"];?>
                                             </span>
                                         </div>
