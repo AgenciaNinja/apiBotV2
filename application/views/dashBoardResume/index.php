@@ -230,7 +230,7 @@
                 </div>
                 <div class="row mt-2">
                     <?php foreach ($estados as $estado): ?>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="card">
                                 <div class="card-header">
                                     <h6 class="text-center text-info">
@@ -247,11 +247,11 @@
                                     </div>
                                     <div class="row">
                                         <?php if ($estado["totalDia"] <= 0) : ?>
-                                            <div class="col-sm-12 text-center text-secondary" style="font-size: 48px;">
+                                            <div class="col-sm-12 text-center text-secondary" style="font-size: 36px;">
                                                 <i class="fa fa-ban"></i>
                                             </div>
                                         <?php else: ?>
-                                            <div class="col-sm-6 text-info" style="font-size: 40px;">
+                                            <div class="col-sm-6 text-info" style="font-size: 36px;">
                                                 <?php echo number_format($estado["totalDia"], 0, '', '.'); ?>
                                             </div>
                                             <div class="col-sm-6 text-right mt-4">
@@ -266,7 +266,11 @@
                                     <?php if ($estado["total"] > 0) : ?>
                                         <div class="row">
                                             <div class="col-sm-5">
-                                                <h6 class="text-secondary">Total General <?php echo number_format($estado["total"], 0, '', '.'); ?></h6>
+                                                <h6 class="text-secondary">
+                                                    <small>
+                                                        Total General <?php echo number_format($estado["total"], 0, '', '.'); ?>
+                                                    </small>
+                                                </h6>
                                             </div>
                                             <div class="col-sm-7 text-right">
                                                 <a href="" id="zeroBalanceTotal">
