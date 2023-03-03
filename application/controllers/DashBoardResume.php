@@ -86,6 +86,42 @@ class DashBoardResume extends MY_Controller
         $this->__vista('dashBoardResume/index', $data);
     }
 
+    public function pasarPendienteAjax()
+    {
+        $timezone   = new DateTimeZone(env("ZONE"));
+        $actualTime = new DateTime();
+
+        $this->generic_model->setDb($this->input->post("dbName"));
+
+        $data = [
+            "estado"              => "pendiente",
+            "fecha_actualizacion" => $actualTime->format("Y-m-d H:i:s")
+        ];
+
+        $wheres = [
+            'fecha_actualizacion >='  => $this->input->post("fecha"),
+            'server' => $this->input->post("server"),
+            'estado' => $this->input->post("estado")
+        ];
+
+        if ($wheres['server'] === '0') {
+            unset($wheres['server']);
+        }
+
+        if ($wheres['fecha_actualizacion >='] === '') {
+            unset($wheres['fecha_actualizacion >=']);
+        } else {
+            $limitToDia = new DateTime($wheres['fecha_actualizacion >=']);
+            $limitToDia->setTimezone($timezone);
+            $limitToDia->modify("+1 day");
+            $wheres['fecha_actualizacion <'] = $limitToDia->format("Y-m-d");
+        }
+
+        $update = $this->generic_model
+            ->updateMultiple("tareas", $wheres, false, $data);
+        echo json_encode(["action" => "success", "estado" => "pendiente"]);
+    }
+
     /*public function trabajo()
     {
         $this->db->save_queries = false;

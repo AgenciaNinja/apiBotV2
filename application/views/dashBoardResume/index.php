@@ -17,7 +17,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <form method="post" action="<?php echo base_url("dashBoardResume/index") ?>">
+                            <form method="post" action="<?php echo base_url("dashBoardResume/index") ?>" id="search">
                                 <div class="row ">
                                     <div class="col-md-2 mt-2 form-group">
                                         <label for="balance" class="text-primary">Balance 2Captcha</label>
@@ -117,7 +117,7 @@
                 <div class="col-md-2">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="text-secondary">Basedato</h5>
+                            <h5 class="text-secondary">BaseDato</h5>
                             <h3 class="text-info text-center">"<?php echo $dbName; ?>"</h3>
                             <div class="text-center mt-2 text-secondary">
                                 <i class="fa fa-database" style="font-size: 80px;"></i>
@@ -255,7 +255,14 @@
                                                 <?php echo number_format($estado["totalDia"], 0, '', '.'); ?>
                                             </div>
                                             <div class="col-sm-6 text-right mt-4">
-                                                <a href="" id="zeroBalance" class="text-success">
+                                                <a
+                                                    href=""
+                                                    class="text-success cambioDia"
+                                                    data-estado="<?= $estado["name"]; ?>"
+                                                    data-fecha="<?= $fecha; ?>"
+                                                    data-server="<?= $server; ?>"
+                                                    data-db="<?= $dbName; ?>"
+                                                >
                                                     <i class="fa fa-check mr-1"></i>pasar a <strong>pendiente</strong>
                                                 </a>
                                             </div>
@@ -273,7 +280,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col-sm-7 text-right">
-                                                <a href="" id="zeroBalanceTotal">
+                                                <a href="" class="cambioTotal">
                                                     <h6 class="text-secondary">
                                                         <small>
                                                             <i class="fa fa-check mr-1"></i>
@@ -295,3 +302,80 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+            $(".cambioDia").click(function(e) {
+                e.preventDefault();
+
+                let url    =  BASE_URL+"dashBoardResume/pasarPendienteAjax";
+                let estado = $(this).data("estado");
+                let fecha  = $(this).data("fecha");
+                let server = $(this).data("server");
+                let dbName = $(this).data("db");
+                Swal.fire({
+                    title: 'Seguro quiere Proceder?',
+                    text: 'Pasar a "pendiente", tareas con estado: '+estado,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, proceder',
+                    cancelButtonText: 'No quiero'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                data: { fecha, server, estado, dbName },
+                                //beforeSend: function() { loading.show(); },
+                                //complete: function() { loading.hide(); }
+                                success: function(data) {
+                                    data = JSON.parse(data);
+                                    if (data.action == "success") {
+                                        Swal.fire({
+                                            title: 'Genial !!!',
+                                            text: 'Operación Satisfactoria',
+                                            icon: 'success',
+                                            confirmButtonColor: '#3085d6',
+                                            confirmButtonText: 'OK'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                $("#search").submit();
+                                            }
+                                        });
+                                    }
+                                },
+                                error: function(result) {
+                                    alert('error');
+                                }
+                            });
+
+                        }
+                })
+            });
+            $(".cambioTotal").click(function(e) {
+                e.preventDefault();
+                alert("OK1");
+                //let web = $(this).data("web");
+                /*if (web !='') {
+                    $.ajax({
+                        type: "POST",
+                        url: BASE_URL+"frontend/dataVisitasAjax",
+                        data: { web },
+                        success: function(data) {
+                            data = JSON.parse(data);
+                            console.log(data);
+                            graficData(data);
+                            $("#exampleModalLongTitle").html(data.web);
+                            $(".bd-example-modal-lg").modal('show');
+                        },
+                        error: function(result) {
+                            alert('error');
+                        }
+                    });
+                }*/
+            });
+        });
+</script>
