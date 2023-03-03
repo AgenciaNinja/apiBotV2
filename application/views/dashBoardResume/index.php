@@ -277,8 +277,7 @@
                                                     <h6 class="text-secondary">
                                                         <small>
                                                             <i class="fa fa-check mr-1"></i>
-                                                            pasar todo
-                                                            (<?= number_format($estado["total"], 0, '', '.'); ?>)
+                                                            pasar <?= number_format($estado["total"], 0, '', '.'); ?>
                                                             a
                                                             <strong>pendiente</strong>
                                                         </small>
