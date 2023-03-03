@@ -55,14 +55,35 @@ class DashBoardResume extends MY_Controller
         $data['porc']   = $data['sended'] > 0 ? round(($data['sended'] * 100)/$data['total']) : 0;
 
         if ($data['showDetail']) {
+            $limitDia  = new DateTime($data['fecha']);
+            $limitDia->setTimezone($timezone);
+            $limitDia->modify("+1 day");
+
+            $whereToDia= [
+                "estado"             => "",
+                "fecha_finalizado >=" => $data['fecha'],
+                "fecha_finalizado <" => $limitDia->format("Y-m-d")
+            ];
+
+            $whereTotal= [
+                "estado" => "",
+            ];
+
+            if ($data['server'] !== "0" ) {
+                $whereToDia["server"] = $data['server'];
+                $whereTotal["server"] = $data['server'];
+            }
+
             foreach ($estadosToCheck as $estado) {
-                $wheres1["estado"]   = $estado;
+                $whereToDia["estado"]   = $estado;
+                $whereTotal["estado"]   = $estado;
                 $detalle["name"]     = $estado;
                 $detalle["fecha"]    = $data['fecha'];
                 $detalle["totalDia"] = $this->generic_model
-                    ->countBy("tareas", $wheres1);
+                    ->countBy("tareas", $whereToDia);
+
                 $detalle["total"] = $this->generic_model
-                    ->countBy("tareas", $wheres1);
+                    ->countBy("tareas", $whereTotal);
                 $data["estados"][]   = $detalle;
             }
         }
