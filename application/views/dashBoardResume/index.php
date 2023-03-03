@@ -246,7 +246,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="text-center col-sm-6">
-                                            <span class=" text-info" style="font-size: 60px;">
+                                            <span class=" text-info" style="font-size: 25px;">
                                                 <?= $estado["totalDia"];?>
                                             </span>
                                         </div>
