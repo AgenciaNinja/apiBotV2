@@ -181,7 +181,7 @@
                                     </div>
                                 <?php else: ?>
                                     <h2 class="text-success text-center">
-                                        <?= $sended;?>
+                                        <?= number_format($sended, 0, '', '.');?>
                                     </h2>
                                     <div class="text-center mt-2 text-success">
                                         <i class="fa fa-check" style="font-size: 75px;"></i>
@@ -247,7 +247,7 @@
                                     <div class="row">
                                         <div class="text-center col-sm-6">
                                             <span class=" text-info" style="font-size: 32px;">
-                                                <?= $estado["totalDia"];?>
+                                                <?= number_format($estado["totalDia"], 0, '', '.');?>
                                             </span>
                                         </div>
                                     </div>
