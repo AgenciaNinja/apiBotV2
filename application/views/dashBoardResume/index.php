@@ -251,7 +251,7 @@
                                                 <i class="fa fa-ban"></i>
                                             </div>
                                         <?php else: ?>
-                                            <div class="col-sm-6 text-info" style="font-size: 44px;">
+                                            <div class="col-sm-6 text-info" style="font-size: 40px;">
                                                 <?php echo number_format($estado["totalDia"], 0, '', '.'); ?>
                                             </div>
                                             <div class="col-sm-6 text-right mt-4">
@@ -265,10 +265,10 @@
                                 <div class="card-footer">
                                     <?php if ($estado["total"] > 0) : ?>
                                         <div class="row">
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-5">
                                                 <h6 class="text-secondary">Total General <?php echo number_format($estado["total"], 0, '', '.'); ?></h6>
                                             </div>
-                                            <div class="col-sm-8 text-right">
+                                            <div class="col-sm-7 text-right">
                                                 <a href="" id="zeroBalanceTotal">
                                                     <h6 class="text-secondary">
                                                         <small>
