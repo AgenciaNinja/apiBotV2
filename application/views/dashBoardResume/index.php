@@ -43,7 +43,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 mt-2 form-group">
+                                    <div class="col-md-2 mt-2 form-group">
                                         <label for="database">Base Datos</label>
                                         <select id="dbName" name="dbName" class="form-control">
                                             <?php foreach ($databases as $database): ?>
@@ -59,18 +59,14 @@
                                     <div class="col-md-2 mt-2 form-group">
                                         <label for="database">Fecha</label>
                                         <select id="fecha" name="fecha" class="form-control">
-                                            <option
-                                                value="<?= $hoy ?>"
-                                                <?php echo ($fecha === $hoy) ? 'selected' : '' ?>
-                                            >
-                                                <?= $hoy ?>
-                                            </option>
-                                            <option
-                                                value="<?= $ayer ?>"
-                                                <?php echo ($fecha === $ayer) ? 'selected' : '' ?>
-                                            >
-                                                <?= $ayer ?>
-                                            </option>
+                                            <?php foreach ($fechas as $f): ?>
+                                                <option
+                                                    value="<?= $f ?>"
+                                                    <?php echo ($f === $fecha) ? 'selected' : '' ?>
+                                                >
+                                                    <?= $f; ?>
+                                                </option>
+                                            <?php endforeach ?>
                                         </select>
                                     </div>
                                     <div class="col-md-2 mt-2 form-group">
@@ -79,17 +75,33 @@
                                             <option value="0" <?php echo ($server === '0') ? 'selected' : '' ?>>
                                                 todos
                                             </option>
-                                            <?php for ($i= 1; $i<= 12; $i++): ?>
+                                            <?php foreach ($servers as $s): ?>
                                                 <option
-                                                    value="<?= $i ?>"
-                                                    <?php echo ($i == $server) ? 'selected' : '' ?>
+                                                    value="<?= $s[0] ?>"
+                                                    <?php echo ( $s[0] == $server) ? 'selected' : '' ?>
                                                 >
-                                                    <?= $i  ?>
+                                                    <?=  $s[0]." ".$s[1]." ".$s[2];  ?>
                                                 </option>
-                                            <?php endfor ?>
+                                            <?php endforeach ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-2 pt-4">
+                                    <div class="col-md-2 mt-2 form-group">
+                                        <div class="custom-control custom-checkbox checkbox-lg" style="margin-top: 34px;">
+                                            <input
+                                                type="checkbox"
+                                                class="custom-control-input"
+                                                id="showDetail"
+                                                name="showDetail"
+                                                value="1"
+                                                <?php if ($showDetail) :?> checked <?php endif ?>
+                                            >
+                                            <label class="custom-control-label" for="showDetail">Mostrar Estado Detalle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-md-10"></div>
+                                    <div class="col-md-2">
                                         <button type="submit" class="btn btn-block btn-secondary mt-2">
                                             <i class="fas fa-filter mr-1"></i>Consultar
                                         </button>
@@ -209,6 +221,23 @@
                     </div>
                 </div>
             </div>
+            <?php if ($showDetail) : ?>
+                <div class="row" style="margin-top: 100px !important;">
+                    <?php foreach ($estados as $estado): ?>
+                        <div class="col-sm-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <?= $estado["name"];?>
+                                </div>
+                                <div class="card-body">
+                                    <?= $estado["fecha"];?>
+                                    <?= $estado["totalDia"];?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach ?>
+                </div>
+            <?php endif ?>
         </div>
     </div>
 </div>
