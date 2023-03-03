@@ -61,6 +61,8 @@ class DashBoardResume extends MY_Controller
                 $detalle["fecha"]    = $data['fecha'];
                 $detalle["totalDia"] = $this->generic_model
                     ->countBy("tareas", $wheres1);
+                $detalle["total"] = $this->generic_model
+                    ->countBy("tareas", $wheres1);
                 $data["estados"][]   = $detalle;
             }
         }

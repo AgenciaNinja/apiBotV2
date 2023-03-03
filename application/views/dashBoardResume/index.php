@@ -48,10 +48,10 @@
                                         <select id="dbName" name="dbName" class="form-control">
                                             <?php foreach ($databases as $database): ?>
                                                 <option
-                                                    value="<?= $database ?>"
+                                                    value="<?php echo $database ?>"
                                                     <?php echo ($dbName === $database) ? 'selected' : '' ?>
                                                 >
-                                                    <?= $database; ?>
+                                                    <?php echo $database; ?>
                                                 </option>
                                             <?php endforeach ?>
                                         </select>
@@ -61,10 +61,10 @@
                                         <select id="fecha" name="fecha" class="form-control">
                                             <?php foreach ($fechas as $f): ?>
                                                 <option
-                                                    value="<?= $f ?>"
+                                                    value="<?php echo $f ?>"
                                                     <?php echo ($f === $fecha) ? 'selected' : '' ?>
                                                 >
-                                                    <?= $f; ?>
+                                                    <?php echo $f; ?>
                                                 </option>
                                             <?php endforeach ?>
                                         </select>
@@ -77,10 +77,10 @@
                                             </option>
                                             <?php foreach ($servers as $s): ?>
                                                 <option
-                                                    value="<?= $s[0] ?>"
+                                                    value="<?php echo $s[0] ?>"
                                                     <?php echo ( $s[0] == $server) ? 'selected' : '' ?>
                                                 >
-                                                    <?=  $s[0]." ".$s[1]." ".$s[2];  ?>
+                                                    <?php echo  $s[0]." ".$s[1]." ".$s[2];  ?>
                                                 </option>
                                             <?php endforeach ?>
                                         </select>
@@ -93,7 +93,8 @@
                                                 id="showDetail"
                                                 name="showDetail"
                                                 value="1"
-                                                <?php if ($showDetail) :?> checked <?php endif ?>
+                                                <?php if ($showDetail) :?> checked <?php
+                                                endif ?>
                                             >
                                             <label class="custom-control-label" for="showDetail">Mostrar Estado Detalle</label>
                                         </div>
@@ -159,7 +160,7 @@
                                     </div>
                                 <?php else: ?>
                                     <h2 class="text-success text-center">
-                                        <?= number_format($total, 0, '', '.');?>
+                                        <?php echo number_format($total, 0, '', '.');?>
                                     </h2>
                                     <div class="text-center mt-2 text-success">
                                         <i class="fa fa-check" style="font-size: 75px;"></i>
@@ -181,7 +182,7 @@
                                     </div>
                                 <?php else: ?>
                                     <h2 class="text-success text-center">
-                                        <?= number_format($sended, 0, '', '.');?>
+                                        <?php echo number_format($sended, 0, '', '.');?>
                                     </h2>
                                     <div class="text-center mt-2 text-success">
                                         <i class="fa fa-check" style="font-size: 75px;"></i>
@@ -203,7 +204,7 @@
                                     </div>
                                 <?php else: ?>
                                     <h2 class="text-success text-center">
-                                        <?= $porc;?> %
+                                        <?php echo $porc;?> %
                                     </h2>
                                     <div class="text-center mt-2 text-success">
                                         <?php if ($porc <= 10) : ?>
@@ -233,28 +234,55 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h6 class="text-center text-info">
-                                        <?= str_replace("_", " ", strtoupper($estado["name"]));?>
+                                        <?php echo str_replace("_", " ", strtoupper($estado["name"]));?>
                                     </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <span class="text-secondary">
-                                                <?= $estado["fecha"];?>
-                                            </span>
+                                            <small class="text-secondary">
+                                                <?php echo $estado["fecha"];?>
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <?php if ($estado["totalDia"] <= 0) : ?>
-                                            <div class="col-sm-12 text-center text-secondary" style="font-size: 64px;">
+                                            <div class="col-sm-12 text-center text-secondary" style="font-size: 48px;">
                                                 <i class="fa fa-ban"></i>
                                             </div>
                                         <?php else: ?>
-                                            <div class="col-sm-8 text-info" style="font-size: 48px;">
-                                                <?= number_format($estado["totalDia"], 0, '', '.'); ?>
+                                            <div class="col-sm-6 text-info" style="font-size: 44px;">
+                                                <?php echo number_format($estado["totalDia"], 0, '', '.'); ?>
+                                            </div>
+                                            <div class="col-sm-6 text-right mt-4">
+                                                <a href="" id="zeroBalance" class="text-success">
+                                                    <i class="fa fa-check mr-1"></i>pasar a <strong>pendiente</strong>
+                                                </a>
                                             </div>
                                         <?php endif ?>
                                     </div>
+                                </div>
+                                <div class="card-footer">
+                                    <?php if ($estado["total"] > 0) : ?>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h6 class="text-secondary">Total General <?php echo number_format($estado["total"], 0, '', '.'); ?></h6>
+                                            </div>
+                                            <div class="col-sm-8 text-right">
+                                                <a href="" id="zeroBalanceTotal">
+                                                    <h6 class="text-secondary">
+                                                        <small>
+                                                            <i class="fa fa-check mr-1"></i>
+                                                            pasar todo
+                                                            (<?= number_format($estado["total"], 0, '', '.'); ?>)
+                                                            a
+                                                            <strong>pendiente</strong>
+                                                        </small>
+                                                    </h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    <?php endif ?>
                                 </div>
                             </div>
                         </div>
