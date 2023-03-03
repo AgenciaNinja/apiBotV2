@@ -229,7 +229,7 @@
                 </div>
                 <div class="row mt-2">
                     <?php foreach ($estados as $estado): ?>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <div class="card">
                                 <div class="card-header">
                                     <h6 class="text-center text-info">
@@ -245,8 +245,8 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="text-center col-sm-6">
-                                            <span class=" text-info" style="font-size: 32px;">
+                                        <div class="text-center col-sm-8">
+                                            <span class=" text-info" style="font-size: 48px;">
                                                 <?= number_format($estado["totalDia"], 0, '', '.');?>
                                             </span>
                                         </div>
