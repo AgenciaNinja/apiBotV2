@@ -37,12 +37,21 @@ class DashBoardResume extends MY_Controller
             $hoy->modify("-1 day");
         }
 
-        $wheres1 = ["fecha_finalizado >" => $data['fecha']];
+        $limitToDia = new DateTime($data['fecha']);
+        $limitToDia->setTimezone($timezone);
+        $limitToDia->modify("+1 day");
+
+        $wheres1 = [
+            "fecha_finalizado >=" => $data['fecha'],
+            "fecha_finalizado <" => $limitDia->format("Y-m-d")
+        ];
+
         $wheres2 = [
-            "fecha_finalizado >" => $data['fecha'],
-            "estado"             => "finalizado",
+            "fecha_finalizado >=" => $data['fecha'],
+            "fecha_finalizado <" => $limitDia->format("Y-m-d"),
             "form"               => "encontrado"
         ];
+
         if ($data['server'] !== "0" ) {
             $wheres1["server"] = $data['server'];
             $wheres2["server"] = $data['server'];
@@ -55,32 +64,18 @@ class DashBoardResume extends MY_Controller
         $data['porc']   = $data['sended'] > 0 ? round(($data['sended'] * 100)/$data['total']) : 0;
 
         if ($data['showDetail']) {
-            $limitDia  = new DateTime($data['fecha']);
-            $limitDia->setTimezone($timezone);
-            $limitDia->modify("+1 day");
-
-            $whereToDia= [
-                "estado"             => "",
-                "fecha_finalizado >=" => $data['fecha'],
-                "fecha_finalizado <" => $limitDia->format("Y-m-d")
-            ];
-
-            $whereTotal= [
-                "estado" => "",
-            ];
-
+            $whereTotal= ["estado" => ""];
             if ($data['server'] !== "0" ) {
-                $whereToDia["server"] = $data['server'];
                 $whereTotal["server"] = $data['server'];
             }
 
             foreach ($estadosToCheck as $estado) {
-                $whereToDia["estado"]   = $estado;
-                $whereTotal["estado"]   = $estado;
+                $wheres1["estado"]   = $estado;
+                $whereTotal["estado"] = $estado;
                 $detalle["name"]     = $estado;
                 $detalle["fecha"]    = $data['fecha'];
                 $detalle["totalDia"] = $this->generic_model
-                    ->countBy("tareas", $whereToDia);
+                    ->countBy("tareas", $wheres1);
 
                 $detalle["total"] = $this->generic_model
                     ->countBy("tareas", $whereTotal);
