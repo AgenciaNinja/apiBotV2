@@ -42,8 +42,8 @@ class DashBoardResume extends MY_Controller
         $limitToDia->modify("+1 day");
 
         $wheres1 = [
-            "fecha_finalizado >=" => $data['fecha'],
-            "fecha_finalizado <" => $limitToDia->format("Y-m-d"),
+            "fecha_actualizacion >=" => $data['fecha'],
+            "fecha_actualizacion <"  => $limitToDia->format("Y-m-d"),
         ];
 
         $wheres2 = [
