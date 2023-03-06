@@ -257,7 +257,7 @@
                                             <div class="col-sm-6 text-right mt-4">
                                                 <a
                                                     href=""
-                                                    class="text-success cambioDia"
+                                                    class="text-success cambiar"
                                                     data-estado="<?= $estado["name"]; ?>"
                                                     data-fecha="<?= $fecha; ?>"
                                                     data-server="<?= $server; ?>"
@@ -280,7 +280,13 @@
                                                 </h6>
                                             </div>
                                             <div class="col-sm-7 text-right">
-                                                <a href="" class="cambioTotal">
+                                                <a
+                                                    href="" class="cambiar"
+                                                    data-estado="<?= $estado["name"]; ?>"
+                                                    data-fecha=""
+                                                    data-server="<?= $server; ?>"
+                                                    data-db="<?= $dbName; ?>"
+                                                >
                                                     <h6 class="text-secondary">
                                                         <small>
                                                             <i class="fa fa-check mr-1"></i>
@@ -305,7 +311,7 @@
 
 <script>
     $(document).ready(function() {
-            $(".cambioDia").click(function(e) {
+            $(".cambiar").click(function(e) {
                 e.preventDefault();
 
                 let url    =  BASE_URL+"dashBoardResume/pasarPendienteAjax";
@@ -313,9 +319,15 @@
                 let fecha  = $(this).data("fecha");
                 let server = $(this).data("server");
                 let dbName = $(this).data("db");
+                let msg    = '';
+                if (fecha === '') {
+                    msg = 'Pasar a "pendiente", "TODAS" las tareas con estado: '+estado;
+                } else {
+                    msg = 'Pasar a "pendiente", tareas con estado: '+estado;
+                }
                 Swal.fire({
                     title: 'Seguro quiere Proceder?',
-                    text: 'Pasar a "pendiente", tareas con estado: '+estado,
+                    text: msg,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -329,8 +341,6 @@
                                 type: "POST",
                                 url: url,
                                 data: { fecha, server, estado, dbName },
-                                //beforeSend: function() { loading.show(); },
-                                //complete: function() { loading.hide(); }
                                 success: function(data) {
                                     data = JSON.parse(data);
                                     if (data.action == "success") {

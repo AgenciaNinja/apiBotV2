@@ -240,7 +240,6 @@ class Tarea extends RestController
                 ], 200
             );
         }
-        //$data->fecha_actualizacion = date("Y-m-d H:i:s");
 
         if ($tarea->domain == '' || $tarea->domain == null) {
             $url = explode('/', str_replace(array('http://', 'https://', 'ftp://', 'www.'), '', $tarea->url));
