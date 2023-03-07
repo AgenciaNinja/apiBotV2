@@ -20,7 +20,7 @@
                             <form method="post" action="<?php echo base_url("dashBoardResume/index") ?>" id="search">
                                 <div class="row ">
                                     <div class="col-md-2 mt-2 form-group">
-                                        <label for="balance" class="text-primary">Balance 2Captcha</label>
+                                        <label for="balance" class="">balance 2Captcha</label>
                                         <div class="input-group">
                                             <input
                                                 class="
@@ -39,9 +39,16 @@
                                                 readonly
                                             >
                                             <div class="input-group-append">
-                                                <span class="input-group-text">$$</span>
+                                                <span class="input-group-text">$</span>
                                             </div>
                                         </div>
+                                        <a
+                                            href="https://2captcha.com/enterpage"
+                                            class="text-primary text-right"
+                                            target="_blank"
+                                        >
+                                            <i class="fa fa-money"></i>Recargar</strong>
+                                        </a>
                                     </div>
                                     <div class="col-md-2 mt-2 form-group">
                                         <label for="database">Base Datos</label>
@@ -99,11 +106,8 @@
                                             <label class="custom-control-label" for="showDetail">Mostrar Estado Detalle</label>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row ">
-                                    <div class="col-md-10"></div>
-                                    <div class="col-md-2">
-                                        <button type="submit" class="btn btn-block btn-secondary mt-2">
+                                    <div class="col-md-2 mt-2">
+                                        <button type="submit" class="btn btn-sm btn-block btn-secondary"  style="margin-top: 34px;">
                                             <i class="fas fa-filter mr-1"></i>Consultar
                                         </button>
                                     </div>
