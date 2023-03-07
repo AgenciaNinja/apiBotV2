@@ -92,9 +92,13 @@
                                             <?php endforeach ?>
                                         </select>
                                         <?php if ($server == 0) : ?>
-                                            <span class="text-success mt-1">total urls Pendientes: <?= $pendientes ?></span>
+                                            <span class="text-success mt-1">
+                                                total urls Pendientes: <?= number_format($pendientes, 0, '', '.') ?>
+                                            </span>
                                         <?php else: ?>
-                                            <span class="text-success mt-1">Urls pendientes, server #<?= $server ?>: <?= $pendientes ?></span>
+                                            <span class="text-success mt-1">
+                                                Urls pendientes, server #<?= $server ?>: <?= number_format($endientes, 0, '', '.') ?>
+                                            </span>
                                         <?php endif ?>
 
                                     </div>
