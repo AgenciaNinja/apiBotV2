@@ -97,7 +97,7 @@
                                             </span>
                                         <?php else: ?>
                                             <span class="text-success mt-1">
-                                                Urls pendientes, server #<?= $server ?>: <?= number_format($endientes, 0, '', '.') ?>
+                                                Urls pendientes, server #<?= $server ?>: <?= number_format($pendientes, 0, '', '.') ?>
                                             </span>
                                         <?php endif ?>
 
