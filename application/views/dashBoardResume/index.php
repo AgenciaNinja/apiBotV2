@@ -91,6 +91,12 @@
                                                 </option>
                                             <?php endforeach ?>
                                         </select>
+                                        <?php if ($server == 0) : ?>
+                                            <span class="text-success mt-1">total urls Pendientes: <?= $pendientes ?></span>
+                                        <?php else: ?>
+                                            <span class="text-success mt-1">Urls pendientes, server #<?= $server ?>: <?= $pendientes ?></span>
+                                        <?php endif ?>
+
                                     </div>
                                     <div class="col-md-2 mt-2 form-group">
                                         <div class="custom-control custom-checkbox checkbox-lg" style="margin-top: 34px;">

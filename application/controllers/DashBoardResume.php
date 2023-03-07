@@ -53,16 +53,21 @@ class DashBoardResume extends MY_Controller
             "form"               => "encontrado"
         ];
 
+        $wheres3 = ["estado" => "pendiente"];
+
         if ($data['server'] !== "0" ) {
             $wheres1["server"] = $data['server'];
             $wheres2["server"] = $data['server'];
+            $wheres3["server"] = $data['server'];
         }
 
-        $this->generic_model->setDb($data['dbName']);
 
-        $data['total']  = $this->generic_model->countBy("tareas", $wheres1);
-        $data['sended'] = $this->generic_model->countBy("tareas", $wheres2);
-        $data['porc']   = $data['sended'] > 0 ? round(($data['sended'] * 100)/$data['total']) : 0;
+
+        $this->generic_model->setDb($data['dbName']);
+        $data['total']      = $this->generic_model->countBy("tareas", $wheres1);
+        $data['sended']     = $this->generic_model->countBy("tareas", $wheres2);
+        $data['pendientes'] = $this->generic_model->countBy("tareas", $wheres3);
+        $data['porc']       = $data['sended'] > 0 ? round(($data['sended'] * 100)/$data['total']) : 0;
 
         if ($data['showDetail']) {
             $whereTotal= ["estado" => ""];
