@@ -179,15 +179,13 @@
                                         <i class="fa fa-exclamation" style="font-size: 60px;"></i>
                                     </div>
                                 <?php else: ?>
-                                    <h2 class="text-success">
+                                    <h1 class="text-success">
                                         <?php echo number_format($total, 0, '', '.');?>
-                                    </h2>
-                                    <div class="text-success">
-                                        <i class="fa fa-check" style="font-size: 60px;"></i>
-                                    </div>
+                                        <i class="fa fa-check" style="font-size: 60px !important;"></i>
+                                    </h1>
                                 <?php endif; ?>
                             </h4>
-                            <h4 class="text-secondary mt-2">Urls procesadas </h4>
+                            <h4 class="text-info mt-2">Urls procesadas </h4>
                         </div>
                         <div class="card-footer text-center" style="min-height: 46px;">
 
@@ -211,7 +209,7 @@
                                     </div>
                                 <?php endif; ?>
                             </h4>
-                            <h4 class="text-secondary mt-2">Forms enviados </h4>
+                            <h4 class="text-info mt-2">Forms enviados </h4>
                         </div>
                         <div class="card-footer text-center" style="min-height: 46px;">
 
@@ -241,7 +239,7 @@
                                     </div>
                                 <?php endif; ?>
                             </h4>
-                            <h4 class="text-secondary mt-2">Efectividad (%)</h4>
+                            <h4 class="text-info mt-2">Efectividad (%)</h4>
                         </div>
                         <div class="card-footer text-center" style="min-height: 46px;">
 
