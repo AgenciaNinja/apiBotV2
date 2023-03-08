@@ -197,8 +197,9 @@
                             <?php else: ?>
                                 <h1 class="text-success">
                                     <?php echo number_format($sended, 0, '', '.');?>
+                                    <i class="fa fa-check" style="font-size: 60px !important;"></i>
                                 </h1>
-                                <i class="fa fa-check" style="font-size: 60px !important;"></i>
+
                             <?php endif; ?>
                             <h4 class="text-info mt-2">Forms enviados </h4>
                         </div>
@@ -216,14 +217,15 @@
                             <?php else: ?>
                                 <h1 class="text-success text-center">
                                     <?php echo $porc;?> %
+                                    <?php if ($porc <= 10) : ?>
+                                        <i class="fa fa-check text-danger" style="font-size: 60px !important;"></i>
+                                    <?php elseif (($porc > 10) && ($porc <= 30)) : ?>
+                                        <i class="fa fa-check text-warning" style="font-size: 60px !important;"></i>
+                                    <?php else: ?>
+                                        <i class="fa fa-check text-success" style="font-size: 60px !important;"></i>
+                                    <?php endif ?>
                                 </h1>
-                                <?php if ($porc <= 10) : ?>
-                                    <i class="fa fa-check text-danger" style="font-size: 60px !important;"></i>
-                                <?php elseif (($porc > 10) && ($porc <= 30)) : ?>
-                                    <i class="fa fa-check text-warning" style="font-size: 60px !important;"></i>
-                                <?php else: ?>
-                                    <i class="fa fa-check text-success" style="font-size: 60px !important;"></i>
-                                <?php endif ?>
+
                             <?php endif; ?>
                             <h4 class="text-info mt-2">Efectividad (%)</h4>
                         </div>
