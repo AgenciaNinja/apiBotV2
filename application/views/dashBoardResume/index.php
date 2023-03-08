@@ -51,7 +51,7 @@
                                         </a>
                                     </div>
                                     <div class="col-md-2 mt-2 form-group">
-                                        <label for="database">Base Datos</label>
+                                        <label for="database">Bases de Datos</label>
                                         <select id="dbName" name="dbName" class="form-control">
                                             <?php foreach ($databases as $database): ?>
                                                 <option
@@ -127,110 +127,123 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-2">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="text-secondary">BaseDato</h5>
-                            <h3 class="text-info text-center">"<?php echo $dbName; ?>"</h3>
-                            <div class="text-center mt-2 text-secondary">
-                                <i class="fa fa-database" style="font-size: 80px;"></i>
+                        <div class="card-body text-center">
+                            <div class="text-secondary">
+                                <i class="fa fa-database" style="font-size: 60px;"></i>
                             </div>
+                            <h4 class="text-info mt-2">"<?php echo $dbName; ?>"</h4>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="" class="text-secondary">Restaurar</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="text-secondary">Fecha </h5>
-                            <h3 class="text-info text-center"><?php echo $fecha; ?></h3>
-                            <div class="text-center mt-2 text-secondary">
-                                <i class="fa fa-calendar" style="font-size: 80px;"></i>
+                        <div class="card-body text-center">
+                            <div class="text-secondary">
+                                <i class="fa fa-calendar" style="font-size: 60px;"></i>
                             </div>
+                            <h4 class="text-info mt-2"><?php echo $fecha; ?></h4>
+                        </div>
+                        <div class="card-footer text-center" style="min-height: 46px;">
+
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="text-secondary">Server(s) </h5>
-                            <h3 class="text-info text-center">
-                                <?php echo ($server == 0) ? "Todos" : "núm # ".$server; ?>
-                            </h3>
-                            <div class="text-center mt-2 text-secondary">
-                                <i class="fa fa-server" style="font-size: 80px;"></i>
+                        <div class="card-body text-center">
+                            <div class="text-secondary">
+                                <i class="fa fa-server" style="font-size: 60px;"></i>
                             </div>
+                            <h4 class="text-info mt-2">
+                                <?php echo ($server == 0) ? "Todos los server" : " server núm # ".$server; ?>
+                            </h4>
+                        </div>
+                        <div class="card-footer text-center" style="min-height: 46px;">
+
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="text-secondary">Urls procesadas </h5>
-                            <h3 class="text-info text-center">
+                        <div class="card-body text-center">
+                            <h4 class="text-info">
                                 <?php if ($total <= 0) : ?>
-                                    <div class="text-center mt-2 text-danger">
-                                        <i class="fa fa-exclamation" style="font-size: 110px;"></i>
+                                    <div class="text-danger">
+                                        <i class="fa fa-exclamation" style="font-size: 60px;"></i>
                                     </div>
                                 <?php else: ?>
-                                    <h2 class="text-success text-center">
+                                    <h2 class="text-success">
                                         <?php echo number_format($total, 0, '', '.');?>
                                     </h2>
-                                    <div class="text-center mt-2 text-success">
-                                        <i class="fa fa-check" style="font-size: 75px;"></i>
+                                    <div class="text-success">
+                                        <i class="fa fa-check" style="font-size: 60px;"></i>
                                     </div>
                                 <?php endif; ?>
-                            </h3>
+                            </h4>
+                            <h4 class="text-secondary mt-2">Urls procesadas </h4>
+                        </div>
+                        <div class="card-footer text-center" style="min-height: 46px;">
 
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="text-secondary">Forms enviados </h5>
-                            <h3 class="text-info text-center">
+                        <div class="card-body text-center">
+                            <h4 class="text-info">
                                 <?php if ($sended <= 0) : ?>
-                                    <div class="text-center mt-2 text-danger">
-                                        <i class="fa fa-exclamation" style="font-size: 110px;"></i>
+                                    <div class="text-danger">
+                                        <i class="fa fa-exclamation" style="font-size: 60px;"></i>
                                     </div>
                                 <?php else: ?>
-                                    <h2 class="text-success text-center">
+                                    <h2 class="text-success">
                                         <?php echo number_format($sended, 0, '', '.');?>
                                     </h2>
-                                    <div class="text-center mt-2 text-success">
-                                        <i class="fa fa-check" style="font-size: 75px;"></i>
+                                    <div class="text-success">
+                                        <i class="fa fa-check" style="font-size: 60px;"></i>
                                     </div>
                                 <?php endif; ?>
-                            </h3>
+                            </h4>
+                            <h4 class="text-secondary mt-2">Forms enviados </h4>
+                        </div>
+                        <div class="card-footer text-center" style="min-height: 46px;">
 
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="text-secondary">Efectividad (%)</h5>
-                            <h3 class="text-info text-center">
+                        <div class="card-body text-center">
+                            <h4 class="text-info">
                                 <?php if ($porc <= 0) : ?>
-                                    <div class="text-center mt-2 text-danger">
-                                        <i class="fa fa-exclamation" style="font-size: 110px;"></i>
+                                    <div class="text-danger">
+                                        <i class="fa fa-exclamation" style="font-size: 60px;"></i>
                                     </div>
                                 <?php else: ?>
                                     <h2 class="text-success text-center">
                                         <?php echo $porc;?> %
                                     </h2>
-                                    <div class="text-center mt-2 text-success">
+                                    <div class="text-success">
                                         <?php if ($porc <= 10) : ?>
-                                            <i class="fa fa-check text-danger" style="font-size: 75px;"></i>
+                                            <i class="fa fa-check text-danger" style="font-size: 60px;"></i>
                                         <?php elseif (($porc > 10) && ($porc <= 30)) : ?>
-                                            <i class="fa fa-check text-warning" style="font-size: 75px;"></i>
+                                            <i class="fa fa-check text-warning" style="font-size: 60px;"></i>
                                         <?php else: ?>
-                                            <i class="fa fa-check text-success" style="font-size: 75px;"></i>
+                                            <i class="fa fa-check text-success" style="font-size: 60px;"></i>
                                         <?php endif ?>
                                     </div>
                                 <?php endif; ?>
-                            </h3>
+                            </h4>
+                            <h4 class="text-secondary mt-2">Efectividad (%)</h4>
+                        </div>
+                        <div class="card-footer text-center" style="min-height: 46px;">
 
                         </div>
                     </div>
