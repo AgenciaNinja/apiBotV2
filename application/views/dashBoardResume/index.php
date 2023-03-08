@@ -151,7 +151,6 @@
                             <h4 class="text-info mt-2"><?php echo $fecha; ?></h4>
                         </div>
                         <div class="card-footer text-center" style="min-height: 46px;">
-
                         </div>
                     </div>
                 </div>
@@ -166,7 +165,6 @@
                             </h4>
                         </div>
                         <div class="card-footer text-center" style="min-height: 46px;">
-
                         </div>
                     </div>
                 </div>
@@ -186,7 +184,6 @@
                             <h4 class="text-info mt-2">Urls procesadas </h4>
                         </div>
                         <div class="card-footer text-center" style="min-height: 46px;">
-
                         </div>
                     </div>
                 </div>
@@ -206,7 +203,6 @@
                             <h4 class="text-info mt-2">Forms enviados </h4>
                         </div>
                         <div class="card-footer text-center" style="min-height: 46px;">
-
                         </div>
                     </div>
                 </div>
@@ -232,7 +228,6 @@
                             <h4 class="text-info mt-2">Efectividad (%)</h4>
                         </div>
                         <div class="card-footer text-center" style="min-height: 46px;">
-
                         </div>
                     </div>
                 </div>
