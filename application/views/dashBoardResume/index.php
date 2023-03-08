@@ -193,20 +193,16 @@
                 <div class="col-md-2">
                     <div class="card">
                         <div class="card-body text-center">
-                            <h4 class="text-info">
-                                <?php if ($sended <= 0) : ?>
-                                    <div class="text-danger">
-                                        <i class="fa fa-exclamation" style="font-size: 60px;"></i>
-                                    </div>
-                                <?php else: ?>
-                                    <h2 class="text-success">
-                                        <?php echo number_format($sended, 0, '', '.');?>
-                                    </h2>
-                                    <div class="text-success">
-                                        <i class="fa fa-check" style="font-size: 60px;"></i>
-                                    </div>
-                                <?php endif; ?>
-                            </h4>
+                            <?php if ($sended <= 0) : ?>
+                                <div class="text-danger">
+                                    <i class="fa fa-exclamation" style="font-size: 60px;"></i>
+                                </div>
+                            <?php else: ?>
+                                <h1 class="text-success">
+                                    <?php echo number_format($sended, 0, '', '.');?>
+                                </h1>
+                                <i class="fa fa-check" style="font-size: 60px !important;"></i>
+                            <?php endif; ?>
                             <h4 class="text-info mt-2">Forms enviados </h4>
                         </div>
                         <div class="card-footer text-center" style="min-height: 46px;">
@@ -217,26 +213,22 @@
                 <div class="col-md-2">
                     <div class="card">
                         <div class="card-body text-center">
-                            <h4 class="text-info">
-                                <?php if ($porc <= 0) : ?>
-                                    <div class="text-danger">
-                                        <i class="fa fa-exclamation" style="font-size: 60px;"></i>
-                                    </div>
+                            <?php if ($porc <= 0) : ?>
+                                <div class="text-danger">
+                                    <i class="fa fa-exclamation" style="font-size: 60px;"></i>
+                                </div>
+                            <?php else: ?>
+                                <h1 class="text-success text-center">
+                                    <?php echo $porc;?> %
+                                </h1>
+                                <?php if ($porc <= 10) : ?>
+                                    <i class="fa fa-check text-danger" style="font-size: 60px !important;"></i>
+                                <?php elseif (($porc > 10) && ($porc <= 30)) : ?>
+                                    <i class="fa fa-check text-warning" style="font-size: 60px !important;"></i>
                                 <?php else: ?>
-                                    <h2 class="text-success text-center">
-                                        <?php echo $porc;?> %
-                                    </h2>
-                                    <div class="text-success">
-                                        <?php if ($porc <= 10) : ?>
-                                            <i class="fa fa-check text-danger" style="font-size: 60px;"></i>
-                                        <?php elseif (($porc > 10) && ($porc <= 30)) : ?>
-                                            <i class="fa fa-check text-warning" style="font-size: 60px;"></i>
-                                        <?php else: ?>
-                                            <i class="fa fa-check text-success" style="font-size: 60px;"></i>
-                                        <?php endif ?>
-                                    </div>
-                                <?php endif; ?>
-                            </h4>
+                                    <i class="fa fa-check text-success" style="font-size: 60px !important;"></i>
+                                <?php endif ?>
+                            <?php endif; ?>
                             <h4 class="text-info mt-2">Efectividad (%)</h4>
                         </div>
                         <div class="card-footer text-center" style="min-height: 46px;">
