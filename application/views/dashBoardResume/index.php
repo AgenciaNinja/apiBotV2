@@ -173,18 +173,16 @@
                 <div class="col-md-2">
                     <div class="card">
                         <div class="card-body text-center">
-                            <h4 class="text-info">
-                                <?php if ($total <= 0) : ?>
-                                    <div class="text-danger">
-                                        <i class="fa fa-exclamation" style="font-size: 60px;"></i>
-                                    </div>
-                                <?php else: ?>
-                                    <h1 class="text-success">
-                                        <?php echo number_format($total, 0, '', '.');?>
-                                        <i class="fa fa-check" style="font-size: 60px !important;"></i>
-                                    </h1>
-                                <?php endif; ?>
-                            </h4>
+                            <?php if ($total <= 0) : ?>
+                                <div class="text-danger">
+                                    <i class="fa fa-exclamation" style="font-size: 60px;"></i>
+                                </div>
+                            <?php else: ?>
+                                <h1 class="text-success">
+                                    <?php echo number_format($total, 0, '', '.');?>
+                                    <i class="fa fa-check" style="font-size: 60px !important;"></i>
+                                </h1>
+                            <?php endif; ?>
                             <h4 class="text-info mt-2">Urls procesadas </h4>
                         </div>
                         <div class="card-footer text-center" style="min-height: 46px;">
