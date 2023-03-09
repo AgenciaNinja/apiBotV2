@@ -142,7 +142,9 @@ class DashBoardResume extends MY_Controller
         }
 
         $this->generic_model->setDb($dbName);
-        $this->generic_model->truncate($table);
+        //$this->generic_model->truncate($table);
+        $this->generic_model->delete($table, ["id >" => 0]);
+        $this->generic_model->query("ALTER TABLE ".$table." AUTO_INCREMENT 1");
         $respuesta = ["action" => "success", "msg" => $table." truncated"];
         echo json_encode($respuesta);
     }

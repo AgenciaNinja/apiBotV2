@@ -487,9 +487,6 @@
                 $("#card-reiniciar").toggleClass("display-none");
                 $("#mostrar-text").toggleClass("display-none");
                 $("#ocultar-text").toggleClass("display-none");
-                //let url    =  BASE_URL+"dashBoardResume/reiniciarDBAjax";
-                let dbName = $(this).data("db");
-                //alert(dbName);
             });
             $("#reiniciarBD").click(function(e) {
                 e.preventDefault();
@@ -554,6 +551,8 @@
                                         toastr.error(result, "Error ");
                                     }
                                 });
+                            } else {
+
                             }
                         }).done( function() {
 
@@ -631,6 +630,7 @@
                                                     if (data.action == "success") {
                                                         toastr.success("Satisfactoria !!!!", "Asignacion de tareas a Server "+data.server);
                                                         loading.hide();
+                                                        $("#search").submit();
                                                     }
                                                 },
                                                 error: function(result) {
@@ -642,10 +642,12 @@
                                     });
                                 } else {
                                     loading.hide();
+                                    $("#search").submit();
                                 }
                             });
 
-                        });
+                        })
+                        ;
                     }
                 })
             });
