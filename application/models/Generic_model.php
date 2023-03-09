@@ -152,7 +152,7 @@ class Generic_model extends CI_Model
         return $u = $this->security->xss_clean(strip_tags(trim($u)));
     }
 
-    public function updateMultiple($table = false, $wheres = false, $wheresIn = false, $data = false)
+    public function updateMultiple($table = false, $wheres = false, $wheresIn = false, $data = false, $limit = false)
     {
         $this->db->save_queries = false;
         if (is_array($wheres)) {
@@ -165,6 +165,10 @@ class Generic_model extends CI_Model
             foreach ($wheresIn as $key => $value) {
                 $this->db->where_in($key, $value);
             }
+        }
+
+        if (($limit !== false) && ($limit > 0)) {
+            $this->db->limit($limit);
         }
 
         if (is_array($data)) {

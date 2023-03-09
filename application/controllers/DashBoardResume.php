@@ -131,4 +131,79 @@ class DashBoardResume extends MY_Controller
             ->updateMultiple("tareas", $wheres, false, $data);
         echo json_encode(["action" => "success", "estado" => "pendiente"]);
     }
+
+    public function reiniciarDBAjax()
+    {
+        $dbName   = $this->input->post("dbName");
+        $servers  = $this->input->post("servers");
+        $estados  = $this->input->post("estados");
+        $dropLog  = $this->input->post("dropLog");
+
+        if ($dbName == null || $dbName == '') {
+            $dbName = "default";
+        }
+
+        $this->generic_model->setDb($dbName);
+
+        $this->db->truncate('control_urls');
+
+        if ($dropLog==="yes") {
+            $this->db->truncate('log');
+        }
+
+        if ($estados == null) {
+            $estados = [];
+        }
+
+        $estados[] = "proceso";
+        $estados[] = "trabajo";
+        $estados[] = "finalizado";
+        $estados[] = "error";
+        $estados[] = "CAPTCHA_UNSOLVABLE";
+        $estados[] = "CAPTCHA_ZERO_BALANCE";
+        $estados[] = "CAPTCHA_UNSOLVABLE_TRY2";
+        $estados[] = "standbye";
+        $wheresIn  = ["estado" => $estados];
+        $data      = ["estado" => "pendiente", "server" => 0];
+
+        if (count($servers) == 1 ) {
+            $data["server"] = $servers[0];
+        }
+
+        $update = $this->generic_model
+            ->updateMultiple("tareas", false, $wheresIn, $data);
+
+        if ((count($servers) > 1 ) && ($update)) {
+            $pendientes = $this->generic_model
+                ->countBy("tareas", ["estado" => "pendiente"]);
+
+            $limit = floor($pendientes/count($servers));
+
+            $where = [
+                "estado" => "pendiente",
+                "server" => 0
+            ];
+
+            for ($i = 0; $i < (count($servers) -1); $i++) {
+                $data = ["server" => $servers[$i]];
+                $update = $this->generic_model
+                    ->updateMultiple("tareas", $where, false, $data, $limit);
+            }
+            $data = ["server" => end($servers)];
+            $update = $this->generic_model
+                ->updateMultiple("tareas", $where, false, $data);
+        }
+
+        $respuesta = [
+            "action"      => "success",
+            "dbName"      => $dbName,
+            "servers"     => $servers,
+            "estados"     => $estados,
+            "dropLog"     => $dropLog,
+            "pendnientes" => $pendientes,
+            "limit"       => $limit,
+            "update"      => $update
+        ];
+        echo json_encode($respuesta);
+    }
 }
