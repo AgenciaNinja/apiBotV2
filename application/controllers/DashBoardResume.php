@@ -132,24 +132,31 @@ class DashBoardResume extends MY_Controller
         echo json_encode(["action" => "success", "estado" => "pendiente"]);
     }
 
-    public function reiniciarDBAjax()
+    public function emptyTableAjax()
     {
-        $dbName   = $this->input->post("dbName");
-        $servers  = $this->input->post("servers");
-        $estados  = $this->input->post("estados");
-        $dropLog  = $this->input->post("dropLog");
+        $dbName = $this->input->post("dbName");
+        $table  = $this->input->post("table");
 
         if ($dbName == null || $dbName == '') {
             $dbName = "default";
         }
 
         $this->generic_model->setDb($dbName);
+        $this->generic_model->truncate($table);
+        $respuesta = ["action" => "success", "msg" => $table." truncated"];
+        echo json_encode($respuesta);
+    }
 
-        $this->db->truncate('control_urls');
+    public function pasarPendiente2Ajax()
+    {
+        $dbName  = $this->input->post("dbName");
+        $server  = $this->input->post("server");
+        $estados = $this->input->post("estados");
 
-        if ($dropLog==="yes") {
-            $this->db->truncate('log');
+        if ($dbName == null || $dbName == '') {
+            $dbName = "default";
         }
+        $this->generic_model->setDb($dbName);
 
         if ($estados == null) {
             $estados = [];
@@ -163,47 +170,64 @@ class DashBoardResume extends MY_Controller
         $estados[] = "CAPTCHA_ZERO_BALANCE";
         $estados[] = "CAPTCHA_UNSOLVABLE_TRY2";
         $estados[] = "standbye";
-        $wheresIn  = ["estado" => $estados];
-        $data      = ["estado" => "pendiente", "server" => 0];
 
-        if (count($servers) == 1 ) {
-            $data["server"] = $servers[0];
-        }
+        $wheresIn  = ["estado" => $estados];
+
+        $data = [
+            "id_mensaje"          => 0,
+            "estado"              => "pendiente",
+            "server"              => $server,
+            "url_formulario"      => "",
+            "captcha"             => "pendiente",
+            "form"                => "pendiente",
+            "fecha_actualizacion" => "",
+            "fecha_finalizado"    => ""
+        ];
 
         $update = $this->generic_model
             ->updateMultiple("tareas", false, $wheresIn, $data);
 
-        if ((count($servers) > 1 ) && ($update)) {
-            $pendientes = $this->generic_model
-                ->countBy("tareas", ["estado" => "pendiente"]);
+        $respuesta = ["action" => "success", "msg" => "urls passed to 'pendiente'"];
+        echo json_encode($respuesta);
+    }
 
-            $limit = floor($pendientes/count($servers));
-
-            $where = [
-                "estado" => "pendiente",
-                "server" => 0
-            ];
-
-            for ($i = 0; $i < (count($servers) -1); $i++) {
-                $data = ["server" => $servers[$i]];
-                $update = $this->generic_model
-                    ->updateMultiple("tareas", $where, false, $data, $limit);
-            }
-            $data = ["server" => end($servers)];
-            $update = $this->generic_model
-                ->updateMultiple("tareas", $where, false, $data);
+    public function countPendientesAjax()
+    {
+        $dbName   = $this->input->post("dbName");
+        if ($dbName == null || $dbName == '') {
+            $dbName = "default";
         }
+        $this->generic_model->setDb($dbName);
+        $pendientes = $this->generic_model
+            ->countBy("tareas", ["estado" => "pendiente"]);
 
         $respuesta = [
-            "action"      => "success",
-            "dbName"      => $dbName,
-            "servers"     => $servers,
-            "estados"     => $estados,
-            "dropLog"     => $dropLog,
-            "pendnientes" => $pendientes,
-            "limit"       => $limit,
-            "update"      => $update
+            "action"     => "success",
+            "pendientes" => $pendientes
+            ];
+        echo json_encode($respuesta);
+    }
+
+    public function asingPendienteByServerAjax()
+    {
+        $dbName = $this->input->post("dbName");
+        $server = $this->input->post("server");
+        $limit  = $this->input->post("limit");
+
+        if ($dbName == null || $dbName == '') {
+            $dbName = "default";
+        }
+
+        $this->generic_model->setDb($dbName);
+        $where = [
+            "estado" => "pendiente",
+            "server" => 0
         ];
+        $data = ["server" => $server];
+        $update = $this->generic_model
+            ->updateMultiple("tareas", $where, false, $data, $limit);
+
+        $respuesta = ["action" => "success", "server" => $server];
         echo json_encode($respuesta);
     }
 }

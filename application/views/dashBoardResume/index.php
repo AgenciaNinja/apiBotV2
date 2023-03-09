@@ -93,11 +93,11 @@
                                         </select>
                                         <?php if ($server == 0) : ?>
                                             <span class="text-success mt-1">
-                                                total urls Pendientes: <?= number_format($pendientes, 0, '', '.') ?>
+                                                total urls Pendientes: <?php echo number_format($pendientes, 0, '', '.') ?>
                                             </span>
                                         <?php else: ?>
                                             <span class="text-success mt-1">
-                                                Urls pendientes, server #<?= $server ?>: <?= number_format($pendientes, 0, '', '.') ?>
+                                                Urls pendientes, server #<?php echo $server ?>: <?php echo number_format($pendientes, 0, '', '.') ?>
                                             </span>
                                         <?php endif ?>
 
@@ -361,10 +361,10 @@
                                                 <a
                                                     href=""
                                                     class="text-success cambiar"
-                                                    data-estado="<?= $estado["name"]; ?>"
-                                                    data-fecha="<?= $fecha; ?>"
-                                                    data-server="<?= $server; ?>"
-                                                    data-db="<?= $dbName; ?>"
+                                                    data-estado="<?php echo $estado["name"]; ?>"
+                                                    data-fecha="<?php echo $fecha; ?>"
+                                                    data-server="<?php echo $server; ?>"
+                                                    data-db="<?php echo $dbName; ?>"
                                                 >
                                                     <i class="fa fa-check mr-1"></i>pasar a <strong>pendiente</strong>
                                                 </a>
@@ -385,15 +385,15 @@
                                             <div class="col-sm-7 text-right">
                                                 <a
                                                     href="" class="cambiar"
-                                                    data-estado="<?= $estado["name"]; ?>"
+                                                    data-estado="<?php echo $estado["name"]; ?>"
                                                     data-fecha=""
-                                                    data-server="<?= $server; ?>"
-                                                    data-db="<?= $dbName; ?>"
+                                                    data-server="<?php echo $server; ?>"
+                                                    data-db="<?php echo $dbName; ?>"
                                                 >
                                                     <h6 class="text-secondary">
                                                         <small>
                                                             <i class="fa fa-check mr-1"></i>
-                                                            pasar <?= number_format($estado["total"], 0, '', '.'); ?>
+                                                            pasar <?php echo number_format($estado["total"], 0, '', '.'); ?>
                                                             a
                                                             <strong>pendiente</strong>
                                                         </small>
@@ -493,7 +493,7 @@
             });
             $("#reiniciarBD").click(function(e) {
                 e.preventDefault();
-                let url     =  BASE_URL+"dashBoardResume/reiniciarDBAjax";
+                //let url     =  BASE_URL+"dashBoardResume/reiniciarDBAjax";
                 let dbName  = $(this).data("db");
                 let dropLog = "no";
                 let servers = [];
@@ -516,38 +516,137 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Sí, proceder',
                     cancelButtonText: 'No quiero'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            loading.show();
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        loading.show();
+                        let table = "control_urls";
+                        $.ajax({
+                            type: "POST",
+                            url:  BASE_URL+"dashBoardResume/emptyTableAjax",
+                            data: { dbName, table  },
+                            success: function(data) {
+                                data = JSON.parse(data);
+                                console.log(data);
+                                if (data.action == "success") {
+                                    toastr.success("Droped !!!", "Table "+ table);
+                                }
+                            },
+                            error: function(result) {
+                                loading.hide();
+                                toastr.error(result, "Error ");
+                            }
+                        }).done( function() {
+                            if (dropLog === "yes") {
+                                table = "log";
+                                $.ajax({
+                                    type: "POST",
+                                    url:  BASE_URL+"dashBoardResume/emptyTableAjax",
+                                    data: { dbName, table  },
+                                    success: function(data) {
+                                        data = JSON.parse(data);
+                                        console.log(data);
+                                        if (data.action == "success") {
+                                            toastr.success("Droped !!!", "Table "+ table);
+                                        }
+                                    },
+                                    error: function(result) {
+                                        loading.hide();
+                                        toastr.error(result, "Error ");
+                                    }
+                                });
+                            }
+                        }).done( function() {
+
+                            let server = 0;
+                            if (servers.length == 1) {
+                                server = servers[0];
+                            }
+
                             $.ajax({
                                 type: "POST",
-                                url: url,
-                                data: { dbName, servers, estados, dropLog },
+                                url:  BASE_URL+"dashBoardResume/pasarPendiente2Ajax",
+                                data: { dbName, server, estados },
                                 success: function(data) {
                                     data = JSON.parse(data);
                                     console.log(data);
-                                    loading.hide();
-                                    if (data.action == "success" && data.update) {
-                                        Swal.fire({
-                                            title: 'Genial !!!',
-                                            text: 'Operación Satisfactoria',
-                                            icon: 'success',
-                                            confirmButtonColor: '#3085d6',
-                                            confirmButtonText: 'OK'
-                                        }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                $("#search").submit();
-                                            }
-                                        });
+                                    if (data.action == "success") {
+                                        toastr.success("pasadas a 'pendiente' !!!", "Tareas actualizadas ");
                                     }
                                 },
                                 error: function(result) {
                                     loading.hide();
-                                    alert('error');
+                                    toastr.error(result, "Error ");
+                                }
+                            }).done( function() {
+                                if (servers.length > 1) {
+                                    let pendientes = 0;
+                                    let limit      = 0;
+                                    $.ajax({
+                                        type: "POST",
+                                        url:  BASE_URL+"dashBoardResume/countPendientesAjax",
+                                        data: { dbName },
+                                        success: function(data) {
+                                            data = JSON.parse(data);
+                                            console.log(data);
+                                            if (data.action == "success") {
+                                                pendientes = data.pendientes;
+                                                limit = Math.floor(pendientes / servers.length);
+                                                toastr.success("Cantidad: "+pendientes, "Tareas pendientes contadas ");
+                                                toastr.success("Cantidad: "+limit, "Asignacion de tarea por server ");
+                                            }
+                                        },
+                                        error: function(result) {
+                                            loading.hide();
+                                            toastr.error(result, "Error ");
+                                        }
+                                    }).done( function() {
+                                        if (pendientes > 0 && limit > 0) {
+                                            let lastServer = servers.pop();
+                                            for (pos in servers) {
+                                                let server = servers[pos];
+                                                $.ajax({
+                                                    type: "POST",
+                                                    url:  BASE_URL+"dashBoardResume/asingPendienteByServerAjax",
+                                                    data: { dbName, server, limit },
+                                                    success: function(data) {
+                                                        data = JSON.parse(data);
+                                                        console.log(data);
+                                                        if (data.action == "success") {
+                                                            toastr.success("Satisfactoria !!!!", "Asignacion de tareas a Server "+data.server);
+                                                        }
+                                                    },
+                                                    error: function(result) {
+                                                        loading.hide();
+                                                        toastr.error(result, "Error ");
+                                                    }
+                                                });
+                                            }
+                                            $.ajax({
+                                                type: "POST",
+                                                url:  BASE_URL+"dashBoardResume/asingPendienteByServerAjax",
+                                                data: { dbName, server: lastServer, limit: false },
+                                                success: function(data) {
+                                                    data = JSON.parse(data);
+                                                    console.log(data);
+                                                    if (data.action == "success") {
+                                                        toastr.success("Satisfactoria !!!!", "Asignacion de tareas a Server "+data.server);
+                                                        loading.hide();
+                                                    }
+                                                },
+                                                error: function(result) {
+                                                    loading.hide();
+                                                    toastr.error(result, "Error ");
+                                                }
+                                            });
+                                        }
+                                    });
+                                } else {
+                                    loading.hide();
                                 }
                             });
 
-                        }
+                        });
+                    }
                 })
             });
         });

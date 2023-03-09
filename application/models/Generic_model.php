@@ -182,4 +182,9 @@ class Generic_model extends CI_Model
     {
         $this->db->where($where)->delete($table);
     }
+
+    public function truncate($table)
+    {
+        $this->db->truncate($table);
+    }
 }
