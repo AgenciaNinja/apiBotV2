@@ -614,8 +614,6 @@
                         if (data.action == "success") {
                             pendientes = data.pendientes;
                             limit      = Math.floor(pendientes / servers.length);
-                            //toastr.success("Cantidad: "+pendientes, "Tareas pendientes contadas ");
-                            //toastr.success("Cantidad: "+limit, "Asignacion de tarea por server ");
                         }
                     },
                     error: function(result) {
