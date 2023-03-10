@@ -246,78 +246,78 @@
                             <h3 class="text-info"><i class="fa fa-bomb mr-1"></i> Restaurar Base de datos: "<?php echo $dbName; ?>" (Reiniciar Tareas)</h3>
                         </div>
                         <div class="card-body">
-                            <h4 class="text-info my-0">Acciones</h4>
-                            <form id="formReiniciar" method="POST">
-                                <div class="row mt-2">
-                                    <div class="col-md-2 form-group">
+                            <h4 class="text-secondary my-0">1.- Acciones con las tablas</h4>
+                            <div class="row mt-2">
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-block btn-success truncate" data-db="<?= $dbName; ?>" data-table="log">Vaciar tabla "log"</button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-block btn-success truncate" data-db="<?= $dbName; ?>" data-table="control_urls">Vaciar tabla "control_urls"</button>
+                                </div>
+                            </div>
+
+                            <h4 class="text-secondary mt-5">2.- Acciones con las estados de las tareas</h4>
+                            <div class="row mt-2">
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-block btn-success" id="pasar-pendiente" data-db="<?= $dbName; ?>">Pasar tareas a "pendiente"</button>
+                                </div>
+                                <div class="col-md-2 form-group">
+
+                                    <div class="custom-control custom-checkbox checkbox-lg">
+                                        <input
+                                            type="checkbox"
+                                            class="custom-control-input estados"
+                                            id="omitir"
+                                            name="omitir"
+                                            value="omitir"
+                                        >
+                                        <label class="custom-control-label text-success" for="omitir">Tareas estado "omitir", procesar</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <div class="custom-control custom-checkbox checkbox-lg">
+                                        <input
+                                            type="checkbox"
+                                            class="custom-control-input estados"
+                                            id="por_repasar"
+                                            name="por_repasar"
+                                            value="por_repasar"
+
+                                        >
+                                        <label class="custom-control-label text-success" for="por_repasar">Tareas estado "por_repasar", procesar</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h4 class="text-secondary mt-5 mb-0 py-0">3.- Distribuir tareas "pendientes" entre los Servidores:</h4>
+                            <div class="row mt-2">
+                                <?php foreach ($servers as $s): ?>
+                                    <div class="col-md-1 form-group">
                                         <div class="custom-control custom-checkbox checkbox-lg">
                                             <input
                                                 type="checkbox"
-                                                class="custom-control-input"
-                                                id="dropLog"
-                                                name="dropLog"
-                                                value="yes"
+                                                class="custom-control-input servers"
+                                                id="server_<?php echo  $s[0]; ?>"
+                                                name="server[<?php echo  $s[0]; ?>]"
+                                                value="<?php echo  $s[0]; ?>"
                                                 checked
                                             >
-                                            <label class="custom-control-label text-success" for="dropLog">Vaciar tabla "log"</label>
+                                            <label class="custom-control-label text-success" for="server_<?php echo  $s[0]; ?>"><?php echo  $s[0]." ".$s[1];  ?></label>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 form-group">
-                                        <div class="custom-control custom-checkbox checkbox-lg">
-                                            <input
-                                                type="checkbox"
-                                                class="custom-control-input estados"
-                                                id="omitir"
-                                                name="omitir"
-                                                value="omitir"
-                                            >
-                                            <label class="custom-control-label text-success" for="omitir">Tomar en cuenta urls con estado "omitir"</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <div class="custom-control custom-checkbox checkbox-lg">
-                                            <input
-                                                type="checkbox"
-                                                class="custom-control-input estados"
-                                                id="por_repasar"
-                                                name="por_repasar"
-                                                value="por_repasar"
-
-                                            >
-                                            <label class="custom-control-label text-success" for="por_repasar">Tomar en cuenta urls con estado "por_repasar"</label>
-                                        </div>
-                                    </div>
+                                <?php endforeach ?>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-block btn-success" id="distribuir" data-db="<?= $dbName; ?>">Proceder a distrubir Tareas</button>
                                 </div>
-                                <h4 class="text-info mt-2 mb-0 py-0">Distrubuir entre los Servidores:</h4>
-                                <div class="row mt-2">
-                                    <?php foreach ($servers as $s): ?>
-                                        <div class="col-md-1 form-group">
-                                            <div class="custom-control custom-checkbox checkbox-lg">
-                                                <input
-                                                    type="checkbox"
-                                                    class="custom-control-input servers"
-                                                    id="server_<?php echo  $s[0]; ?>"
-                                                    name="server[<?php echo  $s[0]; ?>]"
-                                                    value="<?php echo  $s[0]; ?>"
-                                                    checked
-                                                >
-                                                <label class="custom-control-label text-success" for="server_<?php echo  $s[0]; ?>"><?php echo  $s[0]." ".$s[1];  ?></label>
-                                            </div>
-                                        </div>
-                                    <?php endforeach ?>
-                                </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="card-footer text-danger">
                             <div class="row mt-0">
                                 <div class="col-md-9">
                                     Esta acción debe ser ejecutada con cautela, si no esta seguro, cierre esta opción y consulte al administrador.
                                     <a href="" class="text-secondary" id="ocultar-opts-reiniciar">cerrar...</a>
-                                </div>
-                                <div class="col-md-3">
-                                    <button type="button" class="btn btn-sm btn-block btn-danger" id="reiniciarBD" data-db="<?php echo $dbName; ?>">
-                                        <i class="fa fa-bomb mr-1"></i>Proceder a reiniciar BD
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -413,137 +413,260 @@
 </div>
 
 <style>
-    .display-none {
-        display: none;
-    }
+    .display-none { display: none; }
 </style>
 
 <script>
     $(document).ready(function() {
-            $(".cambiar").click(function(e) {
-                e.preventDefault();
+        $(".cambiar").click(function(e) {
+            e.preventDefault();
 
-                let url    =  BASE_URL+"dashBoardResume/pasarPendienteAjax";
-                let estado = $(this).data("estado");
-                let fecha  = $(this).data("fecha");
-                let server = $(this).data("server");
-                let dbName = $(this).data("db");
-                let msg    = '';
-                if (fecha === '') {
-                    msg = 'Pasar a "pendiente", "TODAS" las tareas con estado: '+estado;
-                } else {
-                    msg = 'Pasar a "pendiente", tareas con estado: '+estado;
-                }
-                Swal.fire({
-                    title: 'Seguro quiere Proceder?',
-                    text: msg,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí, proceder',
-                    cancelButtonText: 'No quiero'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            loading.show();
-                            $.ajax({
-                                type: "POST",
-                                url: url,
-                                data: { fecha, server, estado, dbName },
-                                success: function(data) {
-                                    data = JSON.parse(data);
-                                    loading.hide();
-                                    if (data.action == "success") {
-                                        Swal.fire({
-                                            title: 'Genial !!!',
-                                            text: 'Operación Satisfactoria',
-                                            icon: 'success',
-                                            confirmButtonColor: '#3085d6',
-                                            confirmButtonText: 'OK'
-                                        }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                $("#search").submit();
-                                            }
-                                        });
-                                    }
-                                },
-                                error: function(result) {
-                                    loading.hide();
-                                    alert('error');
-                                }
-                            });
-
-                        }
-                })
-            });
-            $("#mostrar-opts-reiniciar").click(function(e) {
-                e.preventDefault();
-                $("#card-reiniciar").toggleClass("display-none");
-                $("#mostrar-text").toggleClass("display-none");
-                $("#ocultar-text").toggleClass("display-none");
-            });
-            $("#ocultar-opts-reiniciar").click(function(e) {
-                e.preventDefault();
-                $("#card-reiniciar").toggleClass("display-none");
-                $("#mostrar-text").toggleClass("display-none");
-                $("#ocultar-text").toggleClass("display-none");
-            });
-            $("#reiniciarBD").click(function(e) {
-                e.preventDefault();
-                //let url     =  BASE_URL+"dashBoardResume/reiniciarDBAjax";
-                let dbName  = $(this).data("db");
-                let dropLog = "no";
-                let servers = [];
-                let estados = [];
-                $('.servers:checked').each(function(i, e) {
-                    servers.push($(this).val());
-                });
-                $('.estados:checked').each(function(i, e) {
-                    estados.push($(this).val());
-                });
-                if ($('#dropLog:checked').length > 0) {
-                    dropLog = "yes";
-                }
-                Swal.fire({
-                    title: 'Seguro quiere Proceder a Reiniciar la BD "'+dbName+'" ?',
-                    text: 'Esta operación es irreversible, y se puede perder información',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí, proceder',
-                    cancelButtonText: 'No quiero'
+            let url    =  BASE_URL+"dashBoardResume/pasarPendienteAjax";
+            let estado = $(this).data("estado");
+            let fecha  = $(this).data("fecha");
+            let server = $(this).data("server");
+            let dbName = $(this).data("db");
+            let msg    = '';
+            if (fecha === '') {
+                msg = 'Pasar a "pendiente", "TODAS" las tareas con estado: '+estado;
+            } else {
+                msg = 'Pasar a "pendiente", tareas con estado: '+estado;
+            }
+            Swal.fire({
+                title: 'Seguro quiere Proceder?',
+                text: msg,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, proceder',
+                cancelButtonText: 'No quiero'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         loading.show();
-                        let table = "control_urls";
                         $.ajax({
                             type: "POST",
-                            url:  BASE_URL+"dashBoardResume/emptyTableAjax",
-                            data: { dbName, table  },
+                            url: url,
+                            data: { fecha, server, estado, dbName },
                             success: function(data) {
                                 data = JSON.parse(data);
-                                console.log(data);
+                                loading.hide();
                                 if (data.action == "success") {
-                                    toastr.success("Droped !!!", "Table "+ table);
+                                    Swal.fire({
+                                        title: 'Genial !!!',
+                                        text: 'Operación Satisfactoria',
+                                        icon: 'success',
+                                        confirmButtonColor: '#3085d6',
+                                        confirmButtonText: 'OK'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            $("#search").submit();
+                                        }
+                                    });
                                 }
                             },
                             error: function(result) {
                                 loading.hide();
-                                toastr.error(result, "Error ");
+                                alert('error');
                             }
-                        }).done( function() {
-                            if (dropLog === "yes") {
-                                table = "log";
+                        });
+
+                    }
+            })
+        });
+
+        $("#mostrar-opts-reiniciar").click(function(e) {
+            e.preventDefault();
+            $("#card-reiniciar").toggleClass("display-none");
+            $("#mostrar-text").toggleClass("display-none");
+            $("#ocultar-text").toggleClass("display-none");
+        });
+
+        $("#ocultar-opts-reiniciar").click(function(e) {
+            e.preventDefault();
+            $("#card-reiniciar").toggleClass("display-none");
+            $("#mostrar-text").toggleClass("display-none");
+            $("#ocultar-text").toggleClass("display-none");
+        });
+
+        $(".truncate").click(function(e) {
+            e.preventDefault();
+
+            let dbName = $(this).data("db");
+            let table  = $(this).data("table");;
+
+            Swal.fire({
+                title: 'Seguro quiere vaciar la tabla "'+table+'" de la BD "'+dbName+'" ?',
+                text: 'Esta operación es irreversible, y se puede perder información',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, proceder',
+                cancelButtonText: 'No quiero'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    loading.show();
+                    $.ajax({
+                        type: "POST",
+                        url:  BASE_URL+"dashBoardResume/emptyTableAjax",
+                        data: { dbName, table },
+                        success: function(data) {
+                            data = JSON.parse(data);
+                            console.log(data);
+                            if (data.action == "success") {
+                                toastr.success("Limpiada Satisfactoriamente !!!", 'Tabla "'+ table+'"');
+                                loading.hide();
+                            }
+                        },
+                        error: function(result) {
+                            loading.hide();
+                            toastr.error(result, "Error ");
+                        }
+                    });
+                }
+            })
+        });
+
+        $("#pasar-pendiente").click(function(e) {
+            e.preventDefault();
+
+            let dbName  = $(this).data("db");
+            let servers = [];
+            let estados = [];
+
+            $('.servers:checked').each(function(i, e) {
+                servers.push($(this).val());
+            });
+            $('.estados:checked').each(function(i, e) {
+                estados.push($(this).val());
+            });
+
+            Swal.fire({
+                title: 'Seguro quiere pasar a "pendiente" las tareas de la BD "'+dbName+'" ?',
+                text: 'Esta operación es irreversible, y se puede perder información',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, proceder',
+                cancelButtonText: 'No quiero'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    loading.show();
+
+                    let server = 0;
+                    if (servers.length == 1) {
+                        server = servers[0];
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url:  BASE_URL+"dashBoardResume/pasarPendiente2Ajax",
+                        data: { dbName, server, estados },
+                        success: function(data) {
+                            data = JSON.parse(data);
+                            console.log(data);
+                            if (data.action == "success") {
+                                loading.hide();
+                                toastr.success("pasadas a 'pendiente' !!!", "Tareas actualizadas ");
+
+                                if (servers.length == 1) {
+                                    toastr.info("Todas las tareas fueron asignadas al server "+server, "Importante!!!");
+                                    setTimeout(() => {
+                                        $("#search").submit();
+                                    }, 3000);
+                                }
+                            }
+                        },
+                        error: function(result) {
+                            loading.hide();
+                            toastr.error(result, "Error ");
+                        }
+                    });
+                }
+            })
+        });
+
+        $("#distribuir").click(function(e) {
+            e.preventDefault();
+
+            let dbName  = $(this).data("db");
+            let servers = [];
+
+            $('.servers:checked').each(function(i, e) {
+                servers.push($(this).val());
+            });
+
+            if (servers.length == 0) {
+                toastr.warning("Debe seleccionar al menos un servidor", "Importante!!!");
+            } else {
+
+                let pendientes = 0;
+                let limit      = 0;
+                $.ajax({
+                    type: "POST",
+                    url:  BASE_URL+"dashBoardResume/countPendientesAjax",
+                    data: { dbName },
+                    success: function(data) {
+                        data = JSON.parse(data);
+                        console.log(data);
+                        if (data.action == "success") {
+                            pendientes = data.pendientes;
+                            limit      = Math.floor(pendientes / servers.length);
+                            //toastr.success("Cantidad: "+pendientes, "Tareas pendientes contadas ");
+                            //toastr.success("Cantidad: "+limit, "Asignacion de tarea por server ");
+                        }
+                    },
+                    error: function(result) {
+                        loading.hide();
+                        toastr.error(result, "Error ");
+                    }
+                }).done( function() {
+                    if (pendientes > 0 && limit > 0) {
+                        Swal.fire({
+                            title: 'Se distribuirán "'+pendientes+'" urls entre "'+servers.length+'" servers',
+                            text: 'a un pormedio de '+limit+' tareas por server',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Sí, proceder',
+                            cancelButtonText: 'No quiero'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                loading.show();
+                                let lastServer = servers.pop();
+                                for (pos in servers) {
+                                    let server = servers[pos];
+                                    $.ajax({
+                                        type: "POST",
+                                        url:  BASE_URL+"dashBoardResume/asingPendienteByServerAjax",
+                                        data: { dbName, server, limit },
+                                        success: function(data) {
+                                            data = JSON.parse(data);
+                                            console.log(data);
+                                            if (data.action == "success") {
+                                                toastr.success("Satisfactoria !!!!", "Asignacion de tareas a Server "+data.server);
+                                            }
+                                        },
+                                        error: function(result) {
+                                            loading.hide();
+                                            toastr.error(result, "Error ");
+                                        }
+                                    });
+                                }
                                 $.ajax({
                                     type: "POST",
-                                    url:  BASE_URL+"dashBoardResume/emptyTableAjax",
-                                    data: { dbName, table  },
+                                    url:  BASE_URL+"dashBoardResume/asingPendienteByServerAjax",
+                                    data: { dbName, server: lastServer, limit: false },
                                     success: function(data) {
                                         data = JSON.parse(data);
                                         console.log(data);
                                         if (data.action == "success") {
-                                            toastr.success("Droped !!!", "Table "+ table);
+                                            toastr.success("Satisfactoria !!!!", "Asignacion de tareas a Server "+data.server);
+                                            loading.hide();
+                                            $("#search").submit();
                                         }
                                     },
                                     error: function(result) {
@@ -551,105 +674,13 @@
                                         toastr.error(result, "Error ");
                                     }
                                 });
-                            } else {
-
                             }
-                        }).done( function() {
-
-                            let server = 0;
-                            if (servers.length == 1) {
-                                server = servers[0];
-                            }
-
-                            $.ajax({
-                                type: "POST",
-                                url:  BASE_URL+"dashBoardResume/pasarPendiente2Ajax",
-                                data: { dbName, server, estados },
-                                success: function(data) {
-                                    data = JSON.parse(data);
-                                    console.log(data);
-                                    if (data.action == "success") {
-                                        toastr.success("pasadas a 'pendiente' !!!", "Tareas actualizadas ");
-                                    }
-                                },
-                                error: function(result) {
-                                    loading.hide();
-                                    toastr.error(result, "Error ");
-                                }
-                            }).done( function() {
-                                if (servers.length > 1) {
-                                    let pendientes = 0;
-                                    let limit      = 0;
-                                    $.ajax({
-                                        type: "POST",
-                                        url:  BASE_URL+"dashBoardResume/countPendientesAjax",
-                                        data: { dbName },
-                                        success: function(data) {
-                                            data = JSON.parse(data);
-                                            console.log(data);
-                                            if (data.action == "success") {
-                                                pendientes = data.pendientes;
-                                                limit = Math.floor(pendientes / servers.length);
-                                                toastr.success("Cantidad: "+pendientes, "Tareas pendientes contadas ");
-                                                toastr.success("Cantidad: "+limit, "Asignacion de tarea por server ");
-                                            }
-                                        },
-                                        error: function(result) {
-                                            loading.hide();
-                                            toastr.error(result, "Error ");
-                                        }
-                                    }).done( function() {
-                                        if (pendientes > 0 && limit > 0) {
-                                            let lastServer = servers.pop();
-                                            for (pos in servers) {
-                                                let server = servers[pos];
-                                                $.ajax({
-                                                    type: "POST",
-                                                    url:  BASE_URL+"dashBoardResume/asingPendienteByServerAjax",
-                                                    data: { dbName, server, limit },
-                                                    success: function(data) {
-                                                        data = JSON.parse(data);
-                                                        console.log(data);
-                                                        if (data.action == "success") {
-                                                            toastr.success("Satisfactoria !!!!", "Asignacion de tareas a Server "+data.server);
-                                                        }
-                                                    },
-                                                    error: function(result) {
-                                                        loading.hide();
-                                                        toastr.error(result, "Error ");
-                                                    }
-                                                });
-                                            }
-                                            $.ajax({
-                                                type: "POST",
-                                                url:  BASE_URL+"dashBoardResume/asingPendienteByServerAjax",
-                                                data: { dbName, server: lastServer, limit: false },
-                                                success: function(data) {
-                                                    data = JSON.parse(data);
-                                                    console.log(data);
-                                                    if (data.action == "success") {
-                                                        toastr.success("Satisfactoria !!!!", "Asignacion de tareas a Server "+data.server);
-                                                        loading.hide();
-                                                        $("#search").submit();
-                                                    }
-                                                },
-                                                error: function(result) {
-                                                    loading.hide();
-                                                    toastr.error(result, "Error ");
-                                                }
-                                            });
-                                        }
-                                    });
-                                } else {
-                                    loading.hide();
-                                    $("#search").submit();
-                                }
-                            });
-
                         })
-                        ;
+                    } else {
+                        toastr.info('No se encontrarón tareas "pendientes"', "Atención !!!");
                     }
-                })
-            });
+                });
+            }
         });
+    });
 </script>

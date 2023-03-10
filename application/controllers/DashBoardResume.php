@@ -232,4 +232,12 @@ class DashBoardResume extends MY_Controller
         $respuesta = ["action" => "success", "server" => $server];
         echo json_encode($respuesta);
     }
+
+    public function testAjax()
+    {
+        $seg = $this->input->post("seg");
+        sleep($seg);
+        $respuesta = ["action" => "success", "msg" => $seg];
+        echo json_encode($respuesta);
+    }
 }
