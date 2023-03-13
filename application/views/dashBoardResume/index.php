@@ -623,7 +623,7 @@
                 }).done( function() {
                     if (pendientes > 0 && limit > 0) {
                         Swal.fire({
-                            title: 'Se distribuirán "'+pendientes+'" urls entre "'+servers.length+'" servers',
+                            title: 'Se distribuirán "'+Number(pendientes).toLocaleString('ES-es')+'" urls entre "'+servers.length+'" servers',
                             text: 'a un pormedio de '+limit+' tareas por server',
                             icon: 'warning',
                             showCancelButton: true,
@@ -634,44 +634,52 @@
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 loading.show();
-                                let lastServer = servers.pop();
-                                for (pos in servers) {
-                                    let server = servers[pos];
-                                    $.ajax({
-                                        type: "POST",
-                                        url:  BASE_URL+"dashBoardResume/asingPendienteByServerAjax",
-                                        data: { dbName, server, limit },
-                                        success: function(data) {
-                                            data = JSON.parse(data);
-                                            console.log(data);
-                                            if (data.action == "success") {
-                                                toastr.success("Satisfactoria !!!!", "Asignacion de tareas a Server "+data.server);
-                                            }
-                                        },
-                                        error: function(result) {
-                                            loading.hide();
-                                            toastr.error(result, "Error ");
+                                const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+                                for (let i = 0, p = Promise.resolve(); i < servers.length; i++) {
+                                    p = p
+                                    .then(() => delay(Math.random() * 100))
+                                    .then(() => { return servers[i];})
+                                    .then((server) => {
+                                        if (i < (servers.length -1)) {
+                                            $.ajax({
+                                                type: "POST",
+                                                url:  BASE_URL+"dashBoardResume/asingPendienteByServerAjax",
+                                                data: { dbName, server, limit },
+                                                success: function(data) {
+                                                    data = JSON.parse(data);
+                                                    console.log(data);
+                                                    if (data.action == "success") {
+                                                        toastr.success("Satisfactoria !!!!", "Asignacion de tareas a Server "+data.server);
+                                                    }
+                                                },
+                                                error: function(result) {
+                                                    loading.hide();
+                                                    toastr.error(result, "Error ");
+                                                }
+                                            });
+                                        } else {
+                                            $.ajax({
+                                                type: "POST",
+                                                url:  BASE_URL+"dashBoardResume/asingPendienteByServerAjax",
+                                                data: { dbName, server, limit: false },
+                                                success: function(data) {
+                                                    data = JSON.parse(data);
+                                                    console.log(data);
+                                                    if (data.action == "success") {
+                                                        toastr.success("Satisfactoria !!!!", "Asignacion de tareas a Server "+data.server);
+                                                        //loading.hide();
+                                                        $("#search").submit();
+                                                    }
+                                                },
+                                                error: function(result) {
+                                                    loading.hide();
+                                                    toastr.error(result, "Error ");
+                                                }
+                                            });
                                         }
                                     });
                                 }
-                                $.ajax({
-                                    type: "POST",
-                                    url:  BASE_URL+"dashBoardResume/asingPendienteByServerAjax",
-                                    data: { dbName, server: lastServer, limit: false },
-                                    success: function(data) {
-                                        data = JSON.parse(data);
-                                        console.log(data);
-                                        if (data.action == "success") {
-                                            toastr.success("Satisfactoria !!!!", "Asignacion de tareas a Server "+data.server);
-                                            loading.hide();
-                                            $("#search").submit();
-                                        }
-                                    },
-                                    error: function(result) {
-                                        loading.hide();
-                                        toastr.error(result, "Error ");
-                                    }
-                                });
                             }
                         })
                     } else {
